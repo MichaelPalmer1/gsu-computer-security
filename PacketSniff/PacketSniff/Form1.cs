@@ -39,9 +39,7 @@ namespace PacketSniff
             }
 
             // Get the second device and display it in the combo box
-            device = devices[2];
-            cmbDevices.Text = device.Description;
-            registerHandler();
+            setDevice(devices[2]);
         }
 
         private static void device_onPacketArrival(Object sender, CaptureEventArgs packet)
@@ -104,13 +102,14 @@ namespace PacketSniff
 
         private void cmbDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            device = devices[cmbDevices.SelectedIndex];
-            cmbDevices.Text = device.Description;
-            registerHandler();
+            setDevice(devices[cmbDevices.SelectedIndex]);
         }
 
-        private void registerHandler()
+        private void setDevice(ICaptureDevice dev)
         {
+            device = dev;
+            cmbDevices.Text = device.Description;
+
             // Register handler function to the 'packet arrival' event
             device.OnPacketArrival += new SharpPcap.PacketArrivalEventHandler(device_onPacketArrival);
 
