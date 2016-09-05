@@ -14,9 +14,9 @@ namespace PacketSniff
 {
     public partial class Form1 : Form
     {
-        CaptureDeviceList devices;              // List of devices for this computer
-        public static ICaptureDevice device;    // Device using
-        public static string stringPackets = "";       // Captured data
+        CaptureDeviceList devices;                  // List of devices for this computer
+        public static ICaptureDevice device;        // Device using
+        public static string stringPackets = "";    // Captured data
 
         public Form1()
         {
