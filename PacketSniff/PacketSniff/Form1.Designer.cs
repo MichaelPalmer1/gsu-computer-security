@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnStartStop = new System.Windows.Forms.Button();
             this.cmbDevices = new System.Windows.Forms.ComboBox();
             this.txtCapturedData = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -42,7 +44,7 @@
             this.btnStartStop.TabIndex = 0;
             this.btnStartStop.Text = "Start";
             this.btnStartStop.UseVisualStyleBackColor = true;
-            this.btnStartStop.Click += new System.EventHandler(this.button1_Click);
+            this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
             // 
             // cmbDevices
             // 
@@ -51,6 +53,7 @@
             this.cmbDevices.Name = "cmbDevices";
             this.cmbDevices.Size = new System.Drawing.Size(413, 21);
             this.cmbDevices.TabIndex = 1;
+            this.cmbDevices.SelectedIndexChanged += new System.EventHandler(this.cmbDevices_SelectedIndexChanged);
             // 
             // txtCapturedData
             // 
@@ -60,6 +63,10 @@
             this.txtCapturedData.Name = "txtCapturedData";
             this.txtCapturedData.Size = new System.Drawing.Size(413, 303);
             this.txtCapturedData.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -82,6 +89,7 @@
         private System.Windows.Forms.Button btnStartStop;
         private System.Windows.Forms.ComboBox cmbDevices;
         private System.Windows.Forms.TextBox txtCapturedData;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
