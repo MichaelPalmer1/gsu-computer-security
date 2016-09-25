@@ -12,14 +12,15 @@ using SharpPcap;
 
 namespace PacketSniff
 {
-    public partial class Form1 : Form
+    public partial class frmCapture : Form
     {
         CaptureDeviceList devices;                  // List of devices for this computer
-        private static ICaptureDevice device;        // Device using
-        private static string stringPackets = "";    // Captured data
-        private static int numPackets = 0;           // Number of packets
+        public static ICaptureDevice device;       // Device using
+        private static string stringPackets = "";   // Captured data
+        private static int numPackets = 0;          // Number of packets
+        frmSend fSend;                              // Send form
 
-        public Form1()
+        public frmCapture()
         {
             InitializeComponent();
 
@@ -224,7 +225,16 @@ namespace PacketSniff
             // Verify a file name was specified
             if (openFileDialog1.FileName != "")
             {
-                txtCapturedData.Text = System.IO.File.ReadAllText(saveFileDialog1.FileName);
+                txtCapturedData.Text = System.IO.File.ReadAllText(openFileDialog1.FileName);
+            }
+        }
+
+        private void sendWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (frmSend.instantiations == 0)
+            {
+                fSend = new frmSend(); // Creates a new frmSend
+                fSend.Show();
             }
         }
     }

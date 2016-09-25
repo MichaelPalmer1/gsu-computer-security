@@ -1,6 +1,6 @@
 ﻿namespace PacketSniff
 {
-    partial class Form1
+    partial class frmCapture
     {
         /// <summary>
         /// Required designer variable.
@@ -44,6 +44,8 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPacketCount = new System.Windows.Forms.TextBox();
+            this.packetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +88,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.screenToolStripMenuItem});
+            this.screenToolStripMenuItem,
+            this.packetsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(634, 24);
@@ -135,7 +138,7 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
             // openFileDialog1
@@ -160,7 +163,22 @@
             this.txtPacketCount.Text = "0";
             this.txtPacketCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Form1
+            // packetsToolStripMenuItem
+            // 
+            this.packetsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendWindowToolStripMenuItem});
+            this.packetsToolStripMenuItem.Name = "packetsToolStripMenuItem";
+            this.packetsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.packetsToolStripMenuItem.Text = "Packets";
+            // 
+            // sendWindowToolStripMenuItem
+            // 
+            this.sendWindowToolStripMenuItem.Name = "sendWindowToolStripMenuItem";
+            this.sendWindowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sendWindowToolStripMenuItem.Text = "&Send Window";
+            this.sendWindowToolStripMenuItem.Click += new System.EventHandler(this.sendWindowToolStripMenuItem_Click);
+            // 
+            // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -174,7 +192,7 @@
             this.Controls.Add(this.btnStartStop);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "frmCapture";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "PacketSniff";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -202,6 +220,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPacketCount;
+        private System.Windows.Forms.ToolStripMenuItem packetsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendWindowToolStripMenuItem;
     }
 }
 
