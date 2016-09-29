@@ -40,12 +40,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.packetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPacketCount = new System.Windows.Forms.TextBox();
-            this.packetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sendWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtGUID = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,12 +73,12 @@
             // txtCapturedData
             // 
             this.txtCapturedData.Font = new System.Drawing.Font("Lucida Console", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCapturedData.Location = new System.Drawing.Point(12, 124);
+            this.txtCapturedData.Location = new System.Drawing.Point(12, 150);
             this.txtCapturedData.Multiline = true;
             this.txtCapturedData.Name = "txtCapturedData";
             this.txtCapturedData.ReadOnly = true;
             this.txtCapturedData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtCapturedData.Size = new System.Drawing.Size(610, 345);
+            this.txtCapturedData.Size = new System.Drawing.Size(610, 319);
             this.txtCapturedData.TabIndex = 2;
             // 
             // timer1
@@ -138,8 +139,23 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.clearToolStripMenuItem.Text = "Clear";
+            // 
+            // packetsToolStripMenuItem
+            // 
+            this.packetsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendWindowToolStripMenuItem});
+            this.packetsToolStripMenuItem.Name = "packetsToolStripMenuItem";
+            this.packetsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.packetsToolStripMenuItem.Text = "Packets";
+            // 
+            // sendWindowToolStripMenuItem
+            // 
+            this.sendWindowToolStripMenuItem.Name = "sendWindowToolStripMenuItem";
+            this.sendWindowToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.sendWindowToolStripMenuItem.Text = "&Send Window";
+            this.sendWindowToolStripMenuItem.Click += new System.EventHandler(this.sendWindowToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -163,20 +179,13 @@
             this.txtPacketCount.Text = "0";
             this.txtPacketCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // packetsToolStripMenuItem
+            // txtGUID
             // 
-            this.packetsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendWindowToolStripMenuItem});
-            this.packetsToolStripMenuItem.Name = "packetsToolStripMenuItem";
-            this.packetsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.packetsToolStripMenuItem.Text = "Packets";
-            // 
-            // sendWindowToolStripMenuItem
-            // 
-            this.sendWindowToolStripMenuItem.Name = "sendWindowToolStripMenuItem";
-            this.sendWindowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.sendWindowToolStripMenuItem.Text = "&Send Window";
-            this.sendWindowToolStripMenuItem.Click += new System.EventHandler(this.sendWindowToolStripMenuItem_Click);
+            this.txtGUID.Location = new System.Drawing.Point(12, 124);
+            this.txtGUID.Name = "txtGUID";
+            this.txtGUID.ReadOnly = true;
+            this.txtGUID.Size = new System.Drawing.Size(610, 20);
+            this.txtGUID.TabIndex = 6;
             // 
             // frmCapture
             // 
@@ -185,6 +194,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(634, 481);
+            this.Controls.Add(this.txtGUID);
             this.Controls.Add(this.txtPacketCount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCapturedData);
@@ -222,6 +232,7 @@
         private System.Windows.Forms.TextBox txtPacketCount;
         private System.Windows.Forms.ToolStripMenuItem packetsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendWindowToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtGUID;
     }
 }
 

@@ -178,6 +178,7 @@ namespace PacketSniff
         {
             device = dev;
             cmbDevices.Text = device.Description;
+            txtGUID.Text = device.Name;
 
             // Register handler function to the 'packet arrival' event
             device.OnPacketArrival += new SharpPcap.PacketArrivalEventHandler(device_onPacketArrival);
