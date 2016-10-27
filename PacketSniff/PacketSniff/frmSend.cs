@@ -67,7 +67,7 @@ namespace PacketSniff
             }
 
             // Extract hex values into byte array
-            string[] sBytes = strBytes.Split(new string[] {"\n", "\r\n", " ", "\r"}, StringSplitOptions.RemoveEmptyEntries);
+            string[] sBytes = strBytes.Split(new string[] {"\n", "\r\n", " ", "\r", "\t"}, StringSplitOptions.RemoveEmptyEntries);
 
             // Change strings to bytes
             byte[] packet = new byte[sBytes.Length];
