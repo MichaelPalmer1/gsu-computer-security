@@ -48,24 +48,16 @@
             this.txtPacketCount = new System.Windows.Forms.TextBox();
             this.txtGUID = new System.Windows.Forms.TextBox();
             this.resultTable = new System.Windows.Forms.DataGridView();
+            this.ipAddress = new System.Windows.Forms.TextBox();
+            this.btnSearchIP = new System.Windows.Forms.Button();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcMac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destMac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.etherType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.headerLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ack = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.syn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.sequenceNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ackNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checksum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.validChecksum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.data = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
@@ -216,29 +208,43 @@
             this.resultTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.resultTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceIP,
-            this.srcPort,
-            this.destIP,
-            this.destPort,
-            this.srcMac,
-            this.destMac,
-            this.protocol,
-            this.etherType,
-            this.TTL,
-            this.headerLength,
-            this.totalLength,
-            this.ack,
-            this.syn,
-            this.sequenceNumber,
-            this.ackNum,
-            this.checksum,
-            this.validChecksum,
-            this.data});
+            this.colCity,
+            this.colState,
+            this.colPostalCode,
+            this.colCountry,
+            this.colLat,
+            this.colLong});
             this.resultTable.Location = new System.Drawing.Point(435, 27);
             this.resultTable.Name = "resultTable";
             this.resultTable.ReadOnly = true;
-            this.resultTable.Size = new System.Drawing.Size(1117, 590);
+            this.resultTable.Size = new System.Drawing.Size(1117, 442);
             this.resultTable.TabIndex = 7;
             this.resultTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.resultTable_CellContentDoubleClick);
+            // 
+            // ipAddress
+            // 
+            this.ipAddress.Location = new System.Drawing.Point(12, 498);
+            this.ipAddress.Name = "ipAddress";
+            this.ipAddress.Size = new System.Drawing.Size(199, 20);
+            this.ipAddress.TabIndex = 8;
+            // 
+            // btnSearchIP
+            // 
+            this.btnSearchIP.Location = new System.Drawing.Point(217, 498);
+            this.btnSearchIP.Name = "btnSearchIP";
+            this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
+            this.btnSearchIP.TabIndex = 9;
+            this.btnSearchIP.Text = "Search";
+            this.btnSearchIP.UseVisualStyleBackColor = true;
+            this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Location = new System.Drawing.Point(435, 475);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(1117, 492);
+            this.webBrowser.TabIndex = 10;
             // 
             // sourceIP
             // 
@@ -246,107 +252,41 @@
             this.sourceIP.Name = "sourceIP";
             this.sourceIP.ReadOnly = true;
             // 
-            // srcPort
+            // colCity
             // 
-            this.srcPort.HeaderText = "Source Port";
-            this.srcPort.Name = "srcPort";
-            this.srcPort.ReadOnly = true;
+            this.colCity.HeaderText = "City";
+            this.colCity.Name = "colCity";
+            this.colCity.ReadOnly = true;
             // 
-            // destIP
+            // colState
             // 
-            this.destIP.HeaderText = "Destination IP";
-            this.destIP.Name = "destIP";
-            this.destIP.ReadOnly = true;
+            this.colState.HeaderText = "State";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
             // 
-            // destPort
+            // colPostalCode
             // 
-            this.destPort.HeaderText = "Destination Port";
-            this.destPort.Name = "destPort";
-            this.destPort.ReadOnly = true;
+            this.colPostalCode.HeaderText = "Postal Code";
+            this.colPostalCode.Name = "colPostalCode";
+            this.colPostalCode.ReadOnly = true;
             // 
-            // srcMac
+            // colCountry
             // 
-            this.srcMac.HeaderText = "Source MAC";
-            this.srcMac.Name = "srcMac";
-            this.srcMac.ReadOnly = true;
+            this.colCountry.HeaderText = "Country";
+            this.colCountry.Name = "colCountry";
+            this.colCountry.ReadOnly = true;
             // 
-            // destMac
+            // colLat
             // 
-            this.destMac.HeaderText = "Destination MAC";
-            this.destMac.Name = "destMac";
-            this.destMac.ReadOnly = true;
+            this.colLat.HeaderText = "Latitude";
+            this.colLat.Name = "colLat";
+            this.colLat.ReadOnly = true;
             // 
-            // protocol
+            // colLong
             // 
-            this.protocol.HeaderText = "Protocol";
-            this.protocol.Name = "protocol";
-            this.protocol.ReadOnly = true;
-            // 
-            // etherType
-            // 
-            this.etherType.HeaderText = "EtherType";
-            this.etherType.Name = "etherType";
-            this.etherType.ReadOnly = true;
-            // 
-            // TTL
-            // 
-            this.TTL.HeaderText = "TTL";
-            this.TTL.Name = "TTL";
-            this.TTL.ReadOnly = true;
-            // 
-            // headerLength
-            // 
-            this.headerLength.HeaderText = "HLEN";
-            this.headerLength.Name = "headerLength";
-            this.headerLength.ReadOnly = true;
-            // 
-            // totalLength
-            // 
-            this.totalLength.HeaderText = "TLEN";
-            this.totalLength.Name = "totalLength";
-            this.totalLength.ReadOnly = true;
-            // 
-            // ack
-            // 
-            this.ack.HeaderText = "ACK";
-            this.ack.Name = "ack";
-            this.ack.ReadOnly = true;
-            // 
-            // syn
-            // 
-            this.syn.HeaderText = "SYN";
-            this.syn.Name = "syn";
-            this.syn.ReadOnly = true;
-            // 
-            // sequenceNumber
-            // 
-            this.sequenceNumber.HeaderText = "SEQ #";
-            this.sequenceNumber.Name = "sequenceNumber";
-            this.sequenceNumber.ReadOnly = true;
-            // 
-            // ackNum
-            // 
-            this.ackNum.HeaderText = "ACK #";
-            this.ackNum.Name = "ackNum";
-            this.ackNum.ReadOnly = true;
-            // 
-            // checksum
-            // 
-            this.checksum.HeaderText = "Checksum";
-            this.checksum.Name = "checksum";
-            this.checksum.ReadOnly = true;
-            // 
-            // validChecksum
-            // 
-            this.validChecksum.HeaderText = "Valid Checksum";
-            this.validChecksum.Name = "validChecksum";
-            this.validChecksum.ReadOnly = true;
-            // 
-            // data
-            // 
-            this.data.HeaderText = "Data";
-            this.data.Name = "data";
-            this.data.ReadOnly = true;
+            this.colLong.HeaderText = "Longitude";
+            this.colLong.Name = "colLong";
+            this.colLong.ReadOnly = true;
             // 
             // frmCapture
             // 
@@ -354,7 +294,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1564, 691);
+            this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.Controls.Add(this.webBrowser);
+            this.Controls.Add(this.btnSearchIP);
+            this.Controls.Add(this.ipAddress);
             this.Controls.Add(this.resultTable);
             this.Controls.Add(this.txtGUID);
             this.Controls.Add(this.txtPacketCount);
@@ -396,24 +339,16 @@
         private System.Windows.Forms.ToolStripMenuItem sendWindowToolStripMenuItem;
         private System.Windows.Forms.TextBox txtGUID;
         private System.Windows.Forms.DataGridView resultTable;
+        private System.Windows.Forms.TextBox ipAddress;
+        private System.Windows.Forms.Button btnSearchIP;
+        private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceIP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn srcPort;
-        private System.Windows.Forms.DataGridViewTextBoxColumn destIP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn destPort;
-        private System.Windows.Forms.DataGridViewTextBoxColumn srcMac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn destMac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn protocol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn etherType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TTL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn headerLength;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalLength;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ack;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn syn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sequenceNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ackNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn checksum;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn validChecksum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn data;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPostalCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCountry;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
     }
 }
 

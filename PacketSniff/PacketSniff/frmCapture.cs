@@ -1,4 +1,19 @@
-﻿using System;
+﻿/**
+ * External libraries using:
+ * - MaxMind.GeoIP2
+ * 
+ * Sample code taken from http://maxmind.github.io/GeoIP2-dotnet/
+ * 
+ * 
+ * Install using NuGet Package Manager Console:
+ *      install-package MaxMind.GeoIP2
+ *      
+ * GeoIP2 city database included with this solution (GeoLite2-City.mmdb, it must placed in the build output directory)
+ * 
+ * Reference: https://msdn.microsoft.com/en-us/library/ms171728.aspx
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +24,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PacketDotNet;
 using SharpPcap;
+using MaxMind.GeoIP2;
+using System.Threading;
+using System.Collections;
 
 namespace PacketSniff
 {
@@ -24,6 +42,8 @@ namespace PacketSniff
         public frmCapture()
         {
             InitializeComponent();
+            DataGridView.CheckForIllegalCrossThreadCalls = false;
+
 
             // Get all the machine's devices
             devices = CaptureDeviceList.Instance;
@@ -59,6 +79,56 @@ namespace PacketSniff
             }
         }
         */
+        /*
+        private Thread demoThread;
+
+        // This event handler creates a thread that calls a 
+        // Windows Forms control in a thread-safe way.
+        private void setTextSafeBtn_Click(object sender, EventArgs e)
+        {
+            demoThread = new Thread(new ThreadStart(ThreadSafeAddRow));
+            demoThread.Start();
+        }
+
+        // This method is executed on the worker thread and makes
+        // a thread-safe call on the TextBox control.
+        private void ThreadSafeAddRow()
+        {
+            AddRow(new String[] { "This text was set safely." });
+        }
+
+        // This delegate enables asynchronous calls for setting
+        // the text property on a TextBox control.
+        delegate void AddRowCallback(String[] row);
+
+        // This method demonstrates a pattern for making thread-safe
+        // calls on a Windows Forms control. 
+        //
+        // If the calling thread is different from the thread that
+        // created the TextBox control, this method creates a
+        // SetTextCallback and calls itself asynchronously using the
+        // Invoke method.
+        //
+        // If the calling thread is the same as the thread that created
+        // the TextBox control, the Text property is set directly. 
+
+        private void AddRow(String[] row)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (resultTable.InvokeRequired)
+            {
+                AddRowCallback d = new AddRowCallback(AddRow);
+                this.Invoke(d, new object[] { row });
+            }
+            else
+            {
+                resultTable.Rows.Add(row);
+
+            }
+        }
+        */
 
         private String buildMAC(byte[] bytes)
         {
@@ -91,11 +161,17 @@ namespace PacketSniff
             EthernetPacket ethernetPacket = (EthernetPacket) EthernetPacket.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
             //IPv6Packet ipv6 = (IPv6Packet)ethernetPacket.PayloadPacket;
             //IPv4Packet ipv4 = (IPv4Packet)ethernetPacket.PayloadPacket;
-            if (!(ethernetPacket.PayloadPacket is IpPacket))
+            if (!(ethernetPacket.PayloadPacket is IPv4Packet))
             {
                 return;
             }
-            IpPacket ipPacket = (IpPacket)ethernetPacket.PayloadPacket;
+            IPv4Packet ip = (IPv4Packet)ethernetPacket.PayloadPacket;
+
+            if (!addedAddresses.Contains(ip.SourceAddress.ToString()) && !pendingAddresses.Contains(ip.SourceAddress.ToString()))
+            {
+                pendingAddresses.Add(ip.SourceAddress.ToString());
+            }
+            
             /*
             if (!(ethernetPacket.PayloadPacket is IPv4Packet))
             {
@@ -103,16 +179,20 @@ namespace PacketSniff
             }
             IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
             */
-            int srcPort, destPort;
+            //int srcPort = 0, destPort = 0;
+            /*
             uint seqNum = 0, ackNum = 0;
             bool validChecksum, ack = false, syn = false;
-            byte[] data;
-            ushort checksum;
-            if (ipPacket.PayloadPacket is TcpPacket)
+            byte[] data = { };
+            ushort checksum = 0;
+            */
+            /*
+            if (ipPacket.PayloadPacket.GetType() == typeof(TcpPacket))
             {
                 TcpPacket tcp = (TcpPacket)ipPacket.PayloadPacket;
                 srcPort = tcp.SourcePort;
-                destPort = tcp.DestinationPort;
+                destPort = tcp.DestinationPort;*/
+                /*
                 validChecksum = tcp.ValidChecksum;
                 checksum = tcp.Checksum;
                 data = tcp.PayloadData;
@@ -120,41 +200,40 @@ namespace PacketSniff
                 syn = tcp.Syn;
                 seqNum = tcp.SequenceNumber;
                 ackNum = tcp.AcknowledgmentNumber;
-            } else if (ipPacket.PayloadPacket is UdpPacket)
+                */
+                /*
+            } else if (ipPacket.PayloadPacket.GetType() == typeof(UdpPacket))
             {
                 UdpPacket udp = (UdpPacket)ipPacket.PayloadPacket;
                 srcPort = udp.SourcePort;
-                destPort = udp.DestinationPort;
+                destPort = udp.DestinationPort;*/
+                /*
                 checksum = udp.Checksum;
                 validChecksum = udp.ValidChecksum;
                 data = udp.PayloadData;
+                */
+                /*
             } else
             {
                 return;
             }
 
+            */
+
             //if (destPort == 80 || srcPort == 80)
             //{
-                addRow(new object[] {
-                    ipPacket.SourceAddress.ToString(),
-                    srcPort,
-                    ipPacket.DestinationAddress.ToString(),
-                    destPort,
-                    buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
-                    buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
-                    ipPacket.Protocol,
-                    ethernetPacket.Type.ToString(),
-                    ipPacket.TimeToLive,
-                    ipPacket.HeaderLength,
-                    ipPacket.TotalLength,
-                    ack,
-                    syn,
-                    seqNum,
-                    ackNum,
-                    checksum,
-                    validChecksum,
-                    System.Text.Encoding.ASCII.GetString(data)
-                });
+            /*
+            addRow(new String[] {
+                ipPacket.SourceAddress.ToString(),
+                srcPort.ToString(),
+                ipPacket.DestinationAddress.ToString(),
+                destPort.ToString(),
+                buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
+                buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
+                ipPacket.Protocol.ToString(),
+                ethernetPacket.Type.ToString()
+            });
+            */
             //}
             /*
             // Reset byte counter
@@ -178,8 +257,12 @@ namespace PacketSniff
             */
         }
 
-        private void addRow(object[] data)
+        private void addRow(String[] data)
         {
+            /*
+            demoThread = new Thread(new ThreadStart(ThreadSafeAddRow));
+            demoThread.Start();
+            */
             resultTable.Rows.Add(data);
         }
 
@@ -191,13 +274,13 @@ namespace PacketSniff
                 {
                     btnStartStop.Text = "Stop";
                     device.StartCapture();
-                    //timer1.Enabled = true;
+                    timer1.Enabled = true;
                 }
                 else
                 {
                     btnStartStop.Text = "Start";
                     device.StopCapture();
-                    //timer1.Enabled = false;
+                    timer1.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -206,11 +289,29 @@ namespace PacketSniff
             }
         }
 
+        private ArrayList pendingAddresses = new ArrayList(), addedAddresses = new ArrayList();
+
+        private bool changed = false;
         private void timer1_Tick(object sender, EventArgs e)
         {
             //txtCapturedData.AppendText(stringPackets);
             //stringPackets = "";
             //txtPacketCount.Text = Convert.ToString(numPackets);
+            ArrayList tmp = (ArrayList) pendingAddresses.Clone();
+            pendingAddresses.Clear();
+            changed = false;
+            foreach (String ip in tmp)
+            {
+                if (!addedAddresses.Contains(ip))
+                {
+                    addedAddresses.Add(ip);
+                    addIP(ip);
+                }
+            }
+            if (changed)
+            {
+                refreshMap();
+            }
         }
 
         private void cmbDevices_SelectedIndexChanged(object sender, EventArgs e)
@@ -287,6 +388,101 @@ namespace PacketSniff
         private void resultTable_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private String url = "https://maps.googleapis.com/maps/api/staticmap?size=1000x400&markers=";
+        private int markerCount = 0;
+
+        private void addIP(String ipAddress)
+        {
+            // This creates the DatabaseReader object, which should be reused across
+            // lookups.
+            using (var reader = new DatabaseReader(@"GeoLite2-City.mmdb"))
+            {
+                // Replace "City" with the appropriate method for your database, e.g.,
+                // "Country".
+                try
+                {
+                    var city = reader.City(ipAddress);
+                    /*
+                    txtCapturedData.Clear();
+
+                    txtCapturedData.AppendText("City: " + city.City.Name);
+                    txtCapturedData.AppendText(Environment.NewLine);
+                    txtCapturedData.AppendText("State: " + city.MostSpecificSubdivision.Name);
+                    txtCapturedData.AppendText(Environment.NewLine);
+                    txtCapturedData.AppendText("Postal Code: " + city.Postal.Code);
+                    txtCapturedData.AppendText(Environment.NewLine);
+                    txtCapturedData.AppendText("Country: " + city.Country.Name);
+                    txtCapturedData.AppendText(Environment.NewLine);
+                    txtCapturedData.AppendText("Latitude: " + city.Location.Latitude);
+                    txtCapturedData.AppendText(Environment.NewLine);
+                    txtCapturedData.AppendText("Longitude: " + city.Location.Longitude);
+
+                    Console.WriteLine(city.Country.Name); // 'United States'
+                    Console.WriteLine(city.MostSpecificSubdivision.Name); // 'Minnesota'
+                    // Console.WriteLine(city.MostSpecificSubdivision.IsoCode); // 'MN'
+
+                    Console.WriteLine(city.City.Name); // 'Minneapolis'
+
+                    Console.WriteLine(city.Postal.Code); // '55455'
+
+                    Console.WriteLine(city.Location.Latitude); // 44.9733
+                    Console.WriteLine(city.Location.Longitude); // -93.2323
+                    */
+                    String coords = city.Location.Latitude + "," + city.Location.Longitude;
+                    if (!url.Contains(coords))
+                    {
+                        if (markerCount == 0)
+                        {
+                            url += coords;
+                        }
+                        else
+                        {
+                            url += "|" + coords;
+                        }
+                        markerCount++;
+                        changed = true;
+                        resultTable.Rows.Add(new String[] {
+                            ipAddress,
+                            city.City.Name,
+                            city.MostSpecificSubdivision.Name,
+                            city.Postal.Code.ToString(),
+                            city.Country.Name,
+                            city.Location.Latitude.ToString(),
+                            city.Location.Longitude.ToString()
+                        });
+                    }
+
+                }
+                catch (MaxMind.GeoIP2.Exceptions.AddressNotFoundException)
+                {
+                    // txtCapturedData.Text = "Address not found";
+                    if (!addedAddresses.Contains(ipAddress))
+                    {
+                        addedAddresses.Add(ipAddress);
+                        resultTable.Rows.Add(new String[] {
+                            ipAddress,
+                            "NA",
+                            "NA",
+                            "NA",
+                            "NA",
+                            "NA",
+                            "NA"
+                        });
+                    }
+                }
+            }
+        }
+
+        private void refreshMap()
+        {
+            webBrowser.Navigate(url);
+        }
+
+        private void btnSearchIP_Click(object sender, EventArgs e)
+        {
+            addIP(ipAddress.Text);
         }
     }
 }
