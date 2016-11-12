@@ -89,28 +89,73 @@ namespace PacketSniff
 
             // Packets
             EthernetPacket ethernetPacket = (EthernetPacket) EthernetPacket.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
-            IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
-            TcpPacket tcpPacket = (TcpPacket)ipPacket.PayloadPacket;
-
+            //IPv6Packet ipv6 = (IPv6Packet)ethernetPacket.PayloadPacket;
+            //IPv4Packet ipv4 = (IPv4Packet)ethernetPacket.PayloadPacket;
+            if (!(ethernetPacket.PayloadPacket is IpPacket))
+            {
+                return;
+            }
+            IpPacket ipPacket = (IpPacket)ethernetPacket.PayloadPacket;
             /*
-            // array to store data
-            byte[] data = packet.Packet.Data;
-
-            // track bytes displayed per line
-            int byteCounter = 0;
+            if (!(ethernetPacket.PayloadPacket is IPv4Packet))
+            {
+                return;
+            }
+            IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
             */
+            int srcPort, destPort;
+            uint seqNum = 0, ackNum = 0;
+            bool validChecksum, ack = false, syn = false;
+            byte[] data;
+            ushort checksum;
+            if (ipPacket.PayloadPacket is TcpPacket)
+            {
+                TcpPacket tcp = (TcpPacket)ipPacket.PayloadPacket;
+                srcPort = tcp.SourcePort;
+                destPort = tcp.DestinationPort;
+                validChecksum = tcp.ValidChecksum;
+                checksum = tcp.Checksum;
+                data = tcp.PayloadData;
+                ack = tcp.Ack;
+                syn = tcp.Syn;
+                seqNum = tcp.SequenceNumber;
+                ackNum = tcp.AcknowledgmentNumber;
+            } else if (ipPacket.PayloadPacket is UdpPacket)
+            {
+                UdpPacket udp = (UdpPacket)ipPacket.PayloadPacket;
+                srcPort = udp.SourcePort;
+                destPort = udp.DestinationPort;
+                checksum = udp.Checksum;
+                validChecksum = udp.ValidChecksum;
+                data = udp.PayloadData;
+            } else
+            {
+                return;
+            }
 
-            addRow(new String[] {
-                ipPacket.SourceAddress.ToString(),
-                tcpPacket.SourcePort.ToString(),
-                ipPacket.DestinationAddress.ToString(),
-                tcpPacket.DestinationPort.ToString(),
-                buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
-                buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
-                ipPacket.Protocol.ToString(),
-                ethernetPacket.Type.ToString(),
-                ipPacket.TimeToLive.ToString()
-            });
+            //if (destPort == 80 || srcPort == 80)
+            //{
+                addRow(new object[] {
+                    ipPacket.SourceAddress.ToString(),
+                    srcPort,
+                    ipPacket.DestinationAddress.ToString(),
+                    destPort,
+                    buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
+                    buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
+                    ipPacket.Protocol,
+                    ethernetPacket.Type.ToString(),
+                    ipPacket.TimeToLive,
+                    ipPacket.HeaderLength,
+                    ipPacket.TotalLength,
+                    ack,
+                    syn,
+                    seqNum,
+                    ackNum,
+                    checksum,
+                    validChecksum,
+                    System.Text.Encoding.ASCII.GetString(data)
+                });
+            //}
             /*
             // Reset byte counter
             byteCounter = 0;
@@ -130,18 +175,12 @@ namespace PacketSniff
                     stringPackets += Environment.NewLine;
                 }
             }
-            stringPackets += Environment.NewLine;
-            stringPackets += Environment.NewLine;
-            stringPackets += "-----------------------------------------------------";
-            stringPackets += Environment.NewLine;
-            stringPackets += Environment.NewLine;
             */
         }
 
-        private void addRow(String[] data)
+        private void addRow(object[] data)
         {
             resultTable.Rows.Add(data);
-            // resultTable.Refresh();
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
@@ -243,6 +282,11 @@ namespace PacketSniff
                 fSend = new frmSend(); // Creates a new frmSend
                 fSend.Show();
             }
+        }
+
+        private void resultTable_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

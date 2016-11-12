@@ -57,6 +57,15 @@
             this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.etherType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.headerLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.totalLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ack = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.syn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.sequenceNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ackNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checksum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.validChecksum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.data = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +86,7 @@
             this.cmbDevices.FormattingEnabled = true;
             this.cmbDevices.Location = new System.Drawing.Point(12, 97);
             this.cmbDevices.Name = "cmbDevices";
-            this.cmbDevices.Size = new System.Drawing.Size(610, 21);
+            this.cmbDevices.Size = new System.Drawing.Size(417, 21);
             this.cmbDevices.TabIndex = 1;
             this.cmbDevices.SelectedIndexChanged += new System.EventHandler(this.cmbDevices_SelectedIndexChanged);
             // 
@@ -89,7 +98,7 @@
             this.txtCapturedData.Name = "txtCapturedData";
             this.txtCapturedData.ReadOnly = true;
             this.txtCapturedData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtCapturedData.Size = new System.Drawing.Size(610, 319);
+            this.txtCapturedData.Size = new System.Drawing.Size(417, 319);
             this.txtCapturedData.TabIndex = 2;
             // 
             // timer1
@@ -175,7 +184,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(409, 60);
+            this.label1.Location = new System.Drawing.Point(216, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 13);
             this.label1.TabIndex = 4;
@@ -183,7 +192,7 @@
             // 
             // txtPacketCount
             // 
-            this.txtPacketCount.Location = new System.Drawing.Point(513, 57);
+            this.txtPacketCount.Location = new System.Drawing.Point(320, 57);
             this.txtPacketCount.Name = "txtPacketCount";
             this.txtPacketCount.Size = new System.Drawing.Size(109, 20);
             this.txtPacketCount.TabIndex = 5;
@@ -195,7 +204,7 @@
             this.txtGUID.Location = new System.Drawing.Point(12, 124);
             this.txtGUID.Name = "txtGUID";
             this.txtGUID.ReadOnly = true;
-            this.txtGUID.Size = new System.Drawing.Size(610, 20);
+            this.txtGUID.Size = new System.Drawing.Size(417, 20);
             this.txtGUID.TabIndex = 6;
             // 
             // resultTable
@@ -214,12 +223,22 @@
             this.destMac,
             this.protocol,
             this.etherType,
-            this.TTL});
-            this.resultTable.Location = new System.Drawing.Point(628, 27);
+            this.TTL,
+            this.headerLength,
+            this.totalLength,
+            this.ack,
+            this.syn,
+            this.sequenceNumber,
+            this.ackNum,
+            this.checksum,
+            this.validChecksum,
+            this.data});
+            this.resultTable.Location = new System.Drawing.Point(435, 27);
             this.resultTable.Name = "resultTable";
             this.resultTable.ReadOnly = true;
-            this.resultTable.Size = new System.Drawing.Size(924, 590);
+            this.resultTable.Size = new System.Drawing.Size(1117, 590);
             this.resultTable.TabIndex = 7;
+            this.resultTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.resultTable_CellContentDoubleClick);
             // 
             // sourceIP
             // 
@@ -274,6 +293,60 @@
             this.TTL.HeaderText = "TTL";
             this.TTL.Name = "TTL";
             this.TTL.ReadOnly = true;
+            // 
+            // headerLength
+            // 
+            this.headerLength.HeaderText = "HLEN";
+            this.headerLength.Name = "headerLength";
+            this.headerLength.ReadOnly = true;
+            // 
+            // totalLength
+            // 
+            this.totalLength.HeaderText = "TLEN";
+            this.totalLength.Name = "totalLength";
+            this.totalLength.ReadOnly = true;
+            // 
+            // ack
+            // 
+            this.ack.HeaderText = "ACK";
+            this.ack.Name = "ack";
+            this.ack.ReadOnly = true;
+            // 
+            // syn
+            // 
+            this.syn.HeaderText = "SYN";
+            this.syn.Name = "syn";
+            this.syn.ReadOnly = true;
+            // 
+            // sequenceNumber
+            // 
+            this.sequenceNumber.HeaderText = "SEQ #";
+            this.sequenceNumber.Name = "sequenceNumber";
+            this.sequenceNumber.ReadOnly = true;
+            // 
+            // ackNum
+            // 
+            this.ackNum.HeaderText = "ACK #";
+            this.ackNum.Name = "ackNum";
+            this.ackNum.ReadOnly = true;
+            // 
+            // checksum
+            // 
+            this.checksum.HeaderText = "Checksum";
+            this.checksum.Name = "checksum";
+            this.checksum.ReadOnly = true;
+            // 
+            // validChecksum
+            // 
+            this.validChecksum.HeaderText = "Valid Checksum";
+            this.validChecksum.Name = "validChecksum";
+            this.validChecksum.ReadOnly = true;
+            // 
+            // data
+            // 
+            this.data.HeaderText = "Data";
+            this.data.Name = "data";
+            this.data.ReadOnly = true;
             // 
             // frmCapture
             // 
@@ -332,6 +405,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn protocol;
         private System.Windows.Forms.DataGridViewTextBoxColumn etherType;
         private System.Windows.Forms.DataGridViewTextBoxColumn TTL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn headerLength;
+        private System.Windows.Forms.DataGridViewTextBoxColumn totalLength;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ack;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn syn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sequenceNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ackNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn checksum;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn validChecksum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data;
     }
 }
 
