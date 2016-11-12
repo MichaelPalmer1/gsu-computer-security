@@ -15,9 +15,10 @@ namespace PacketSniff
     public partial class frmCapture : Form
     {
         CaptureDeviceList devices;                  // List of devices for this computer
-        public static ICaptureDevice device;       // Device using
-        private static string stringPackets = "";   // Captured data
-        private static int numPackets = 0;          // Number of packets
+        public ICaptureDevice device;               // Device using
+        public static ICaptureDevice device2;       // Static device
+        // private string stringPackets = "";       // Captured data
+        // private int numPackets = 0;              // Number of packets
         frmSend fSend;                              // Send form
 
         public frmCapture()
@@ -47,7 +48,8 @@ namespace PacketSniff
             }
         }
 
-        private static string getEtherType(string data)
+        /*
+        private string getEtherType(string data)
         {
             switch (data) {
                 case "0800": return "IPv4";
@@ -56,59 +58,60 @@ namespace PacketSniff
                     default: return "Unknown";
             }
         }
+        */
 
-        private static void device_onPacketArrival(Object sender, CaptureEventArgs packet)
+        private String buildMAC(byte[] bytes)
         {
+            String output = "";
+            int counter = 1;
+            foreach (byte b in bytes)
+            {
+                output += b.ToString("X2");
+                if (counter != bytes.Length)
+                {
+                    output += ":";
+                }
+                counter++;
+            }
+            return output;
+        }
+
+        private void device_onPacketArrival(Object sender, CaptureEventArgs packet)
+        {
+            /*
             // Increment packet counter
             numPackets++;
 
             // Prefix packet with the packet number in the capture window
             stringPackets += "Packet Number: " + Convert.ToString(numPackets);
             stringPackets += Environment.NewLine;
+            */
 
+            // Packets
+            EthernetPacket ethernetPacket = (EthernetPacket) EthernetPacket.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
+            IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
+            TcpPacket tcpPacket = (TcpPacket)ipPacket.PayloadPacket;
+
+            /*
             // array to store data
             byte[] data = packet.Packet.Data;
 
             // track bytes displayed per line
             int byteCounter = 0;
+            */
 
-            stringPackets += "Destination MAC Address: ";
-
-            // parse packets
-            foreach (byte b in data)
-            {
-                // Add byte to the string in hexadecimal
-                if (byteCounter <= 13)
-                {
-                    stringPackets += b.ToString("X2") + " ";
-                }
-
-                // Increment byte counter
-                byteCounter++;
-
-                // Add headers
-                switch (byteCounter)
-                {
-                    case 6:
-                        stringPackets += Environment.NewLine;
-                        stringPackets += "Source MAC Address: ";
-                        break;
-
-                    case 12:
-                        stringPackets += Environment.NewLine;
-                        stringPackets += "EtherType: ";
-                        break;
-
-                    case 14:
-                        string etherType = data[12].ToString("X2") + data[13].ToString("X2");
-                        stringPackets += "(" + getEtherType(etherType) + ")" + Environment.NewLine;
-                        break;
-                }
-            }
-
-            // Add a line break
-            stringPackets += Environment.NewLine;
-
+            addRow(new String[] {
+                ipPacket.SourceAddress.ToString(),
+                tcpPacket.SourcePort.ToString(),
+                ipPacket.DestinationAddress.ToString(),
+                tcpPacket.DestinationPort.ToString(),
+                buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
+                buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
+                ipPacket.Protocol.ToString(),
+                ethernetPacket.Type.ToString(),
+                ipPacket.TimeToLive.ToString()
+            });
+            /*
             // Reset byte counter
             byteCounter = 0;
 
@@ -132,11 +135,13 @@ namespace PacketSniff
             stringPackets += "-----------------------------------------------------";
             stringPackets += Environment.NewLine;
             stringPackets += Environment.NewLine;
+            */
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void addRow(String[] data)
         {
-
+            resultTable.Rows.Add(data);
+            // resultTable.Refresh();
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
@@ -147,13 +152,13 @@ namespace PacketSniff
                 {
                     btnStartStop.Text = "Stop";
                     device.StartCapture();
-                    timer1.Enabled = true;
+                    //timer1.Enabled = true;
                 }
                 else
                 {
                     btnStartStop.Text = "Start";
                     device.StopCapture();
-                    timer1.Enabled = false;
+                    //timer1.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -164,9 +169,9 @@ namespace PacketSniff
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            txtCapturedData.AppendText(stringPackets);
-            stringPackets = "";
-            txtPacketCount.Text = Convert.ToString(numPackets);
+            //txtCapturedData.AppendText(stringPackets);
+            //stringPackets = "";
+            //txtPacketCount.Text = Convert.ToString(numPackets);
         }
 
         private void cmbDevices_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,6 +191,7 @@ namespace PacketSniff
             // Open device for capturing
             int readTimeoutMilliseconds = 1000;
             device.Open(DeviceMode.Promiscuous, readTimeoutMilliseconds);
+            device2 = device;
         }
 
         /**

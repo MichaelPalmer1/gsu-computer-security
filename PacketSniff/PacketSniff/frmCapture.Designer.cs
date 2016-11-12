@@ -47,7 +47,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPacketCount = new System.Windows.Forms.TextBox();
             this.txtGUID = new System.Windows.Forms.TextBox();
+            this.resultTable = new System.Windows.Forms.DataGridView();
+            this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.srcPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.srcMac = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destMac = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.etherType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TTL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -93,7 +104,7 @@
             this.packetsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(634, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1564, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -187,13 +198,91 @@
             this.txtGUID.Size = new System.Drawing.Size(610, 20);
             this.txtGUID.TabIndex = 6;
             // 
+            // resultTable
+            // 
+            this.resultTable.AllowUserToAddRows = false;
+            this.resultTable.AllowUserToDeleteRows = false;
+            this.resultTable.AllowUserToOrderColumns = true;
+            this.resultTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.resultTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.resultTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.sourceIP,
+            this.srcPort,
+            this.destIP,
+            this.destPort,
+            this.srcMac,
+            this.destMac,
+            this.protocol,
+            this.etherType,
+            this.TTL});
+            this.resultTable.Location = new System.Drawing.Point(628, 27);
+            this.resultTable.Name = "resultTable";
+            this.resultTable.ReadOnly = true;
+            this.resultTable.Size = new System.Drawing.Size(924, 590);
+            this.resultTable.TabIndex = 7;
+            // 
+            // sourceIP
+            // 
+            this.sourceIP.HeaderText = "Source IP";
+            this.sourceIP.Name = "sourceIP";
+            this.sourceIP.ReadOnly = true;
+            // 
+            // srcPort
+            // 
+            this.srcPort.HeaderText = "Source Port";
+            this.srcPort.Name = "srcPort";
+            this.srcPort.ReadOnly = true;
+            // 
+            // destIP
+            // 
+            this.destIP.HeaderText = "Destination IP";
+            this.destIP.Name = "destIP";
+            this.destIP.ReadOnly = true;
+            // 
+            // destPort
+            // 
+            this.destPort.HeaderText = "Destination Port";
+            this.destPort.Name = "destPort";
+            this.destPort.ReadOnly = true;
+            // 
+            // srcMac
+            // 
+            this.srcMac.HeaderText = "Source MAC";
+            this.srcMac.Name = "srcMac";
+            this.srcMac.ReadOnly = true;
+            // 
+            // destMac
+            // 
+            this.destMac.HeaderText = "Destination MAC";
+            this.destMac.Name = "destMac";
+            this.destMac.ReadOnly = true;
+            // 
+            // protocol
+            // 
+            this.protocol.HeaderText = "Protocol";
+            this.protocol.Name = "protocol";
+            this.protocol.ReadOnly = true;
+            // 
+            // etherType
+            // 
+            this.etherType.HeaderText = "EtherType";
+            this.etherType.Name = "etherType";
+            this.etherType.ReadOnly = true;
+            // 
+            // TTL
+            // 
+            this.TTL.HeaderText = "TTL";
+            this.TTL.Name = "TTL";
+            this.TTL.ReadOnly = true;
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(634, 481);
+            this.ClientSize = new System.Drawing.Size(1564, 691);
+            this.Controls.Add(this.resultTable);
             this.Controls.Add(this.txtGUID);
             this.Controls.Add(this.txtPacketCount);
             this.Controls.Add(this.label1);
@@ -205,9 +294,9 @@
             this.Name = "frmCapture";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "PacketSniff";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resultTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,6 +322,16 @@
         private System.Windows.Forms.ToolStripMenuItem packetsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendWindowToolStripMenuItem;
         private System.Windows.Forms.TextBox txtGUID;
+        private System.Windows.Forms.DataGridView resultTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sourceIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn srcPort;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destPort;
+        private System.Windows.Forms.DataGridViewTextBoxColumn srcMac;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destMac;
+        private System.Windows.Forms.DataGridViewTextBoxColumn protocol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn etherType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TTL;
     }
 }
 

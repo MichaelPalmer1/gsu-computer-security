@@ -81,7 +81,7 @@ namespace PacketSniff
             // Send the packet
             try
             {
-                frmCapture.device.SendPacket(packet);
+                frmCapture.device2.SendPacket(packet);
             }
             catch (Exception ex)
             {
