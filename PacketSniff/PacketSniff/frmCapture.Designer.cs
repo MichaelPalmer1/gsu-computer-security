@@ -59,6 +59,7 @@
             this.btnSearchIP = new System.Windows.Forms.Button();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.chkAutoScroll = new System.Windows.Forms.CheckBox();
+            this.btnReset = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
@@ -292,12 +293,25 @@
             // chkAutoScroll
             // 
             this.chkAutoScroll.AutoSize = true;
+            this.chkAutoScroll.Checked = true;
+            this.chkAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAutoScroll.Location = new System.Drawing.Point(334, 501);
             this.chkAutoScroll.Name = "chkAutoScroll";
             this.chkAutoScroll.Size = new System.Drawing.Size(77, 17);
             this.chkAutoScroll.TabIndex = 11;
             this.chkAutoScroll.Text = "Auto Scroll";
             this.chkAutoScroll.UseVisualStyleBackColor = true;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.Location = new System.Drawing.Point(106, 44);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(88, 39);
+            this.btnReset.TabIndex = 12;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // frmCapture
             // 
@@ -306,6 +320,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.chkAutoScroll);
             this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.btnSearchIP);
@@ -362,6 +377,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLat;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
         private System.Windows.Forms.CheckBox chkAutoScroll;
+        private System.Windows.Forms.Button btnReset;
     }
 }
 

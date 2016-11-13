@@ -36,7 +36,7 @@ namespace PacketSniff
         public ICaptureDevice device;               // Device using
         public static ICaptureDevice device2;       // Static device
         // private string stringPackets = "";       // Captured data
-        // private int numPackets = 0;              // Number of packets
+        private int numPackets = 0;                 // Number of packets
         frmSend fSend;                              // Send form
 
         public frmCapture()
@@ -148,41 +148,37 @@ namespace PacketSniff
 
         private void device_onPacketArrival(Object sender, CaptureEventArgs packet)
         {
-            /*
             // Increment packet counter
             numPackets++;
 
-            // Prefix packet with the packet number in the capture window
-            stringPackets += "Packet Number: " + Convert.ToString(numPackets);
-            stringPackets += Environment.NewLine;
-            */
-
             // Packets
             EthernetPacket ethernetPacket = (EthernetPacket) EthernetPacket.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
-            String address = "";
+            String address = "", destAddr = "";
             if(ethernetPacket.PayloadPacket is IPv4Packet)
             {
                 IPv4Packet ip = (IPv4Packet)ethernetPacket.PayloadPacket;
                 address = ip.SourceAddress.ToString();
+                destAddr = ip.DestinationAddress.ToString();
             }
             else if(ethernetPacket.PayloadPacket is IPv6Packet)
             {
                 IPv6Packet ip = (IPv6Packet)ethernetPacket.PayloadPacket;
                 address = ip.SourceAddress.MapToIPv4().ToString();
+                destAddr = ip.DestinationAddress.MapToIPv4().ToString();
                 Console.WriteLine("Mapping " + ip.SourceAddress.ToString() + " to " + address);
-            }
+            }/*
             else if(ethernetPacket.PayloadPacket is ARPPacket)
             {
                 ARPPacket arp = (ARPPacket)ethernetPacket.PayloadPacket;
                 address = arp.SenderProtocolAddress.ToString();
                 Console.WriteLine("ARP " + address);
-            }
+            }*/
             else
             {
                 return;
             }
 
-            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address))
+            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address) && destAddr == "192.168.0.102")
             {
                 pendingAddresses.Add(address);
             }
@@ -275,7 +271,7 @@ namespace PacketSniff
         {
             //txtCapturedData.AppendText(stringPackets);
             //stringPackets = "";
-            //txtPacketCount.Text = Convert.ToString(numPackets);
+            txtPacketCount.Text = Convert.ToString(numPackets);
             ArrayList tmp = (ArrayList) pendingAddresses.Clone();
             pendingAddresses.Clear();
             changed = false;
@@ -365,7 +361,7 @@ namespace PacketSniff
 
         }
 
-        private String url = "https://maps.googleapis.com/maps/api/staticmap?size=1000x400&markers=";
+        private String url = "https://maps.googleapis.com/maps/api/staticmap?size=900x450&markers=";
         private int markerCount = 0;
         private DatabaseReader reader = new DatabaseReader(@"GeoLite2-City.mmdb");
 
@@ -462,6 +458,15 @@ namespace PacketSniff
         private void refreshMap()
         {
             webBrowser.Navigate(url);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            pendingAddresses.Clear();
+            addedAddresses.Clear();
+            resultTable.Rows.Clear();
+            url = "https://maps.googleapis.com/maps/api/staticmap?size=900x450&markers=";
+            markerCount = 0;
         }
 
         private void btnSearchIP_Click(object sender, EventArgs e)
