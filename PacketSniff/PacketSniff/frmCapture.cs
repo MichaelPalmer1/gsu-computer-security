@@ -178,7 +178,7 @@ namespace PacketSniff
                 return;
             }
 
-            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address) && destAddr == "192.168.0.102")
+            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address))
             {
                 pendingAddresses.Add(address);
             }
