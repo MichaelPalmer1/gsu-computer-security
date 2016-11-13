@@ -159,17 +159,32 @@ namespace PacketSniff
 
             // Packets
             EthernetPacket ethernetPacket = (EthernetPacket) EthernetPacket.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
-            //IPv6Packet ipv6 = (IPv6Packet)ethernetPacket.PayloadPacket;
-            //IPv4Packet ipv4 = (IPv4Packet)ethernetPacket.PayloadPacket;
-            if (!(ethernetPacket.PayloadPacket is IPv4Packet))
+            String address = "";
+            if(ethernetPacket.PayloadPacket is IPv4Packet)
+            {
+                IPv4Packet ip = (IPv4Packet)ethernetPacket.PayloadPacket;
+                address = ip.SourceAddress.ToString();
+            }
+            else if(ethernetPacket.PayloadPacket is IPv6Packet)
+            {
+                IPv6Packet ip = (IPv6Packet)ethernetPacket.PayloadPacket;
+                address = ip.SourceAddress.MapToIPv4().ToString();
+                Console.WriteLine("Mapping " + ip.SourceAddress.ToString() + " to " + address);
+            }
+            else if(ethernetPacket.PayloadPacket is ARPPacket)
+            {
+                ARPPacket arp = (ARPPacket)ethernetPacket.PayloadPacket;
+                address = arp.SenderProtocolAddress.ToString();
+                Console.WriteLine("ARP " + address);
+            }
+            else
             {
                 return;
             }
-            IPv4Packet ip = (IPv4Packet)ethernetPacket.PayloadPacket;
 
-            if (!addedAddresses.Contains(ip.SourceAddress.ToString()) && !pendingAddresses.Contains(ip.SourceAddress.ToString()))
+            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address))
             {
-                pendingAddresses.Add(ip.SourceAddress.ToString());
+                pendingAddresses.Add(address);
             }
             
             /*
@@ -178,21 +193,16 @@ namespace PacketSniff
                 return;
             }
             IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
-            */
-            //int srcPort = 0, destPort = 0;
-            /*
+            int srcPort = 0, destPort = 0;
             uint seqNum = 0, ackNum = 0;
             bool validChecksum, ack = false, syn = false;
             byte[] data = { };
             ushort checksum = 0;
-            */
-            /*
             if (ipPacket.PayloadPacket.GetType() == typeof(TcpPacket))
             {
                 TcpPacket tcp = (TcpPacket)ipPacket.PayloadPacket;
                 srcPort = tcp.SourcePort;
-                destPort = tcp.DestinationPort;*/
-                /*
+                destPort = tcp.DestinationPort;
                 validChecksum = tcp.ValidChecksum;
                 checksum = tcp.Checksum;
                 data = tcp.PayloadData;
@@ -200,29 +210,19 @@ namespace PacketSniff
                 syn = tcp.Syn;
                 seqNum = tcp.SequenceNumber;
                 ackNum = tcp.AcknowledgmentNumber;
-                */
-                /*
             } else if (ipPacket.PayloadPacket.GetType() == typeof(UdpPacket))
             {
                 UdpPacket udp = (UdpPacket)ipPacket.PayloadPacket;
                 srcPort = udp.SourcePort;
-                destPort = udp.DestinationPort;*/
-                /*
+                destPort = udp.DestinationPort;
                 checksum = udp.Checksum;
                 validChecksum = udp.ValidChecksum;
                 data = udp.PayloadData;
-                */
-                /*
             } else
             {
                 return;
             }
 
-            */
-
-            //if (destPort == 80 || srcPort == 80)
-            //{
-            /*
             addRow(new String[] {
                 ipPacket.SourceAddress.ToString(),
                 srcPort.ToString(),
@@ -233,27 +233,6 @@ namespace PacketSniff
                 ipPacket.Protocol.ToString(),
                 ethernetPacket.Type.ToString()
             });
-            */
-            //}
-            /*
-            // Reset byte counter
-            byteCounter = 0;
-
-            // Add raw data header
-            stringPackets += "Raw Data:" + Environment.NewLine;
-
-            // process each byte in the captured packet
-            foreach (byte b in data)
-            {
-                // Add byte to the string in hexadecimal
-                stringPackets += b.ToString("X2") + " ";
-                byteCounter++;
-                if (byteCounter == 16)
-                {
-                    byteCounter = 0;
-                    stringPackets += Environment.NewLine;
-                }
-            }
             */
         }
 
@@ -283,9 +262,9 @@ namespace PacketSniff
                     timer1.Enabled = false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                // MessageBox.Show(ex.Message);
             }
         }
 
@@ -302,11 +281,7 @@ namespace PacketSniff
             changed = false;
             foreach (String ip in tmp)
             {
-                if (!addedAddresses.Contains(ip))
-                {
-                    addedAddresses.Add(ip);
-                    addIP(ip);
-                }
+                addIP(ip);
             }
             if (changed)
             {
@@ -392,86 +367,95 @@ namespace PacketSniff
 
         private String url = "https://maps.googleapis.com/maps/api/staticmap?size=1000x400&markers=";
         private int markerCount = 0;
+        private DatabaseReader reader = new DatabaseReader(@"GeoLite2-City.mmdb");
 
         private void addIP(String ipAddress)
         {
-            // This creates the DatabaseReader object, which should be reused across
-            // lookups.
-            using (var reader = new DatabaseReader(@"GeoLite2-City.mmdb"))
+            if (addedAddresses.Contains(ipAddress))
             {
-                // Replace "City" with the appropriate method for your database, e.g.,
-                // "Country".
-                try
+                return;
+            }
+
+            // Replace "City" with the appropriate method for your database, e.g.,
+            // "Country".
+            try
+            {
+                var city = reader.City(ipAddress);
+                /*
+                txtCapturedData.Clear();
+
+                txtCapturedData.AppendText("City: " + city.City.Name);
+                txtCapturedData.AppendText(Environment.NewLine);
+                txtCapturedData.AppendText("State: " + city.MostSpecificSubdivision.Name);
+                txtCapturedData.AppendText(Environment.NewLine);
+                txtCapturedData.AppendText("Postal Code: " + city.Postal.Code);
+                txtCapturedData.AppendText(Environment.NewLine);
+                txtCapturedData.AppendText("Country: " + city.Country.Name);
+                txtCapturedData.AppendText(Environment.NewLine);
+                txtCapturedData.AppendText("Latitude: " + city.Location.Latitude);
+                txtCapturedData.AppendText(Environment.NewLine);
+                txtCapturedData.AppendText("Longitude: " + city.Location.Longitude);
+
+                Console.WriteLine(city.Country.Name);
+                Console.WriteLine(city.MostSpecificSubdivision.Name);
+                Console.WriteLine(city.City.Name);
+                Console.WriteLine(city.Postal.Code);
+                Console.WriteLine(city.Location.Latitude);
+                Console.WriteLine(city.Location.Longitude);
+                */
+                String coords = city.Location.Latitude + "," + city.Location.Longitude;
+                if (!url.Contains(coords))
                 {
-                    var city = reader.City(ipAddress);
-                    /*
-                    txtCapturedData.Clear();
-
-                    txtCapturedData.AppendText("City: " + city.City.Name);
-                    txtCapturedData.AppendText(Environment.NewLine);
-                    txtCapturedData.AppendText("State: " + city.MostSpecificSubdivision.Name);
-                    txtCapturedData.AppendText(Environment.NewLine);
-                    txtCapturedData.AppendText("Postal Code: " + city.Postal.Code);
-                    txtCapturedData.AppendText(Environment.NewLine);
-                    txtCapturedData.AppendText("Country: " + city.Country.Name);
-                    txtCapturedData.AppendText(Environment.NewLine);
-                    txtCapturedData.AppendText("Latitude: " + city.Location.Latitude);
-                    txtCapturedData.AppendText(Environment.NewLine);
-                    txtCapturedData.AppendText("Longitude: " + city.Location.Longitude);
-
-                    Console.WriteLine(city.Country.Name); // 'United States'
-                    Console.WriteLine(city.MostSpecificSubdivision.Name); // 'Minnesota'
-                    // Console.WriteLine(city.MostSpecificSubdivision.IsoCode); // 'MN'
-
-                    Console.WriteLine(city.City.Name); // 'Minneapolis'
-
-                    Console.WriteLine(city.Postal.Code); // '55455'
-
-                    Console.WriteLine(city.Location.Latitude); // 44.9733
-                    Console.WriteLine(city.Location.Longitude); // -93.2323
-                    */
-                    String coords = city.Location.Latitude + "," + city.Location.Longitude;
-                    if (!url.Contains(coords))
+                    if (markerCount == 0)
                     {
-                        if (markerCount == 0)
-                        {
-                            url += coords;
-                        }
-                        else
-                        {
-                            url += "|" + coords;
-                        }
-                        markerCount++;
-                        changed = true;
-                        resultTable.Rows.Add(new String[] {
-                            ipAddress,
-                            city.City.Name,
-                            city.MostSpecificSubdivision.Name,
-                            city.Postal.Code.ToString(),
-                            city.Country.Name,
-                            city.Location.Latitude.ToString(),
-                            city.Location.Longitude.ToString()
-                        });
+                        url += coords;
                     }
-
+                    else
+                    {
+                        url += "|" + coords;
+                    }
+                    markerCount++;
+                    changed = true;
+                    string postalCode = "NA";
+                    if(city.Postal.Code != null)
+                    {
+                        postalCode = city.Postal.Code;
+                    }
+                    resultTable.Rows.Add(new String[] {
+                        ipAddress,
+                        city.City.Name,
+                        city.MostSpecificSubdivision.Name,
+                        postalCode,
+                        city.Country.Name,
+                        city.Location.Latitude.ToString(),
+                        city.Location.Longitude.ToString()
+                    });
+                    if (chkAutoScroll.Checked)
+                    {
+                        resultTable.FirstDisplayedScrollingRowIndex = resultTable.RowCount - 1;
+                    }
+                    // addedAddresses.Add(ipAddress);
                 }
-                catch (MaxMind.GeoIP2.Exceptions.AddressNotFoundException)
+
+            }
+            catch (MaxMind.GeoIP2.Exceptions.AddressNotFoundException)
+            {
+                Console.WriteLine("Could not find address " + ipAddress);
+                // txtCapturedData.Text = "Address not found";
+                resultTable.Rows.Add(new String[] {
+                    ipAddress,
+                    "NA",
+                    "NA",
+                    "NA",
+                    "NA",
+                    "NA",
+                    "NA"
+                });
+                if (chkAutoScroll.Checked)
                 {
-                    // txtCapturedData.Text = "Address not found";
-                    if (!addedAddresses.Contains(ipAddress))
-                    {
-                        addedAddresses.Add(ipAddress);
-                        resultTable.Rows.Add(new String[] {
-                            ipAddress,
-                            "NA",
-                            "NA",
-                            "NA",
-                            "NA",
-                            "NA",
-                            "NA"
-                        });
-                    }
+                    resultTable.FirstDisplayedScrollingRowIndex = resultTable.RowCount - 1;
                 }
+                // addedAddresses.Add(ipAddress);
             }
         }
 

@@ -48,9 +48,6 @@
             this.txtPacketCount = new System.Windows.Forms.TextBox();
             this.txtGUID = new System.Windows.Forms.TextBox();
             this.resultTable = new System.Windows.Forms.DataGridView();
-            this.ipAddress = new System.Windows.Forms.TextBox();
-            this.btnSearchIP = new System.Windows.Forms.Button();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +55,10 @@
             this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ipAddress = new System.Windows.Forms.TextBox();
+            this.btnSearchIP = new System.Windows.Forms.Button();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.chkAutoScroll = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
@@ -221,31 +222,6 @@
             this.resultTable.TabIndex = 7;
             this.resultTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.resultTable_CellContentDoubleClick);
             // 
-            // ipAddress
-            // 
-            this.ipAddress.Location = new System.Drawing.Point(12, 498);
-            this.ipAddress.Name = "ipAddress";
-            this.ipAddress.Size = new System.Drawing.Size(199, 20);
-            this.ipAddress.TabIndex = 8;
-            // 
-            // btnSearchIP
-            // 
-            this.btnSearchIP.Location = new System.Drawing.Point(217, 498);
-            this.btnSearchIP.Name = "btnSearchIP";
-            this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
-            this.btnSearchIP.TabIndex = 9;
-            this.btnSearchIP.Text = "Search";
-            this.btnSearchIP.UseVisualStyleBackColor = true;
-            this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.Location = new System.Drawing.Point(435, 475);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(1117, 492);
-            this.webBrowser.TabIndex = 10;
-            // 
             // sourceIP
             // 
             this.sourceIP.HeaderText = "Source IP";
@@ -288,6 +264,41 @@
             this.colLong.Name = "colLong";
             this.colLong.ReadOnly = true;
             // 
+            // ipAddress
+            // 
+            this.ipAddress.Location = new System.Drawing.Point(12, 498);
+            this.ipAddress.Name = "ipAddress";
+            this.ipAddress.Size = new System.Drawing.Size(199, 20);
+            this.ipAddress.TabIndex = 8;
+            // 
+            // btnSearchIP
+            // 
+            this.btnSearchIP.Location = new System.Drawing.Point(217, 498);
+            this.btnSearchIP.Name = "btnSearchIP";
+            this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
+            this.btnSearchIP.TabIndex = 9;
+            this.btnSearchIP.Text = "Search";
+            this.btnSearchIP.UseVisualStyleBackColor = true;
+            this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Location = new System.Drawing.Point(435, 475);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(1117, 492);
+            this.webBrowser.TabIndex = 10;
+            // 
+            // chkAutoScroll
+            // 
+            this.chkAutoScroll.AutoSize = true;
+            this.chkAutoScroll.Location = new System.Drawing.Point(334, 501);
+            this.chkAutoScroll.Name = "chkAutoScroll";
+            this.chkAutoScroll.Size = new System.Drawing.Size(77, 17);
+            this.chkAutoScroll.TabIndex = 11;
+            this.chkAutoScroll.Text = "Auto Scroll";
+            this.chkAutoScroll.UseVisualStyleBackColor = true;
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -295,6 +306,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.Controls.Add(this.chkAutoScroll);
             this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.btnSearchIP);
             this.Controls.Add(this.ipAddress);
@@ -349,6 +361,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCountry;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLat;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
+        private System.Windows.Forms.CheckBox chkAutoScroll;
     }
 }
 
