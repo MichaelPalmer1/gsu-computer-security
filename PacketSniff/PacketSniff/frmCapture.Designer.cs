@@ -60,6 +60,7 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.chkAutoScroll = new System.Windows.Forms.CheckBox();
             this.btnReset = new System.Windows.Forms.Button();
+            this.chkHideLocal = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             this.SuspendLayout();
@@ -206,6 +207,7 @@
             this.resultTable.AllowUserToAddRows = false;
             this.resultTable.AllowUserToDeleteRows = false;
             this.resultTable.AllowUserToOrderColumns = true;
+            this.resultTable.AllowUserToResizeRows = false;
             this.resultTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.resultTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.resultTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -313,6 +315,16 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // chkHideLocal
+            // 
+            this.chkHideLocal.AutoSize = true;
+            this.chkHideLocal.Location = new System.Drawing.Point(334, 525);
+            this.chkHideLocal.Name = "chkHideLocal";
+            this.chkHideLocal.Size = new System.Drawing.Size(77, 17);
+            this.chkHideLocal.TabIndex = 13;
+            this.chkHideLocal.Text = "Hide Local";
+            this.chkHideLocal.UseVisualStyleBackColor = true;
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,6 +332,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.Controls.Add(this.chkHideLocal);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.chkAutoScroll);
             this.Controls.Add(this.webBrowser);
@@ -378,6 +391,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
         private System.Windows.Forms.CheckBox chkAutoScroll;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.CheckBox chkHideLocal;
     }
 }
 

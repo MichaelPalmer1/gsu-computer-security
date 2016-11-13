@@ -178,7 +178,7 @@ namespace PacketSniff
                 return;
             }
 
-            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address))
+            if (!addedAddresses.Contains(address) && !pendingAddresses.Contains(address) && address != null)
             {
                 pendingAddresses.Add(address);
             }
@@ -451,7 +451,10 @@ namespace PacketSniff
                 {
                     resultTable.FirstDisplayedScrollingRowIndex = resultTable.RowCount - 1;
                 }
-                // addedAddresses.Add(ipAddress);
+                if (chkHideLocal.Checked)
+                {
+                    addedAddresses.Add(ipAddress);
+                }
             }
         }
 
@@ -467,6 +470,8 @@ namespace PacketSniff
             resultTable.Rows.Clear();
             url = "https://maps.googleapis.com/maps/api/staticmap?size=900x450&markers=";
             markerCount = 0;
+            numPackets = 0;
+            txtPacketCount.Text = "0";
         }
 
         private void btnSearchIP_Click(object sender, EventArgs e)
