@@ -434,9 +434,15 @@ namespace PacketSniff
             } catch (MaxMind.GeoIP2.Exceptions.GeoIP2Exception)
             {
                 // Catch all other GeoIP exceptions gracefully
+                // If this was a manual lookup, put an error message in the textbox
                 if (manual)
                 {
                     txtResults.Text = "Could not find address " + ipAddress;
+                }
+                else
+                {
+                    // Not a manual lookup, so let's put a row for that IP in the table
+                    resultTable.Rows.Add(new String[] { ipAddress });
                 }
             }
 
