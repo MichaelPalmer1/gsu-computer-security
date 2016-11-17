@@ -41,7 +41,6 @@ namespace PacketSniff
         // Arrays to track ARP packets and addresses
         private ArrayList arpRequests = new ArrayList();
         private ArrayList gratuitousArps = new ArrayList();
-        // private ArrayList pendingAddresses = new ArrayList();
         private Hashtable pendingAddresses = new Hashtable();
         private ArrayList addedAddresses = new ArrayList();
 
@@ -288,7 +287,6 @@ namespace PacketSniff
                 /** PACKET LOCATIONS **/
 
                 // Make a copy of the pending ip addresses so we can keep collecting while we add to the table
-                // ArrayList tmpAddresses = (ArrayList)pendingAddresses.Clone();
                 Hashtable tmpAddresses = (Hashtable)pendingAddresses.Clone();
 
                 // Safe to clear this now
