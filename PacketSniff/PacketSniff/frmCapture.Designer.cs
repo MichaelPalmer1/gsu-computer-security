@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.btnStartStop = new System.Windows.Forms.Button();
             this.cmbDevices = new System.Windows.Forms.ComboBox();
-            this.txtCapturedData = new System.Windows.Forms.TextBox();
+            this.txtResults = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +59,11 @@
             this.colArpTargetMac = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colArpTargetIp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblGratuitousArps = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblGratuitousArps)).BeginInit();
@@ -84,16 +89,16 @@
             this.cmbDevices.TabIndex = 1;
             this.cmbDevices.SelectedIndexChanged += new System.EventHandler(this.cmbDevices_SelectedIndexChanged);
             // 
-            // txtCapturedData
+            // txtResults
             // 
-            this.txtCapturedData.Font = new System.Drawing.Font("Lucida Console", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCapturedData.Location = new System.Drawing.Point(12, 150);
-            this.txtCapturedData.Multiline = true;
-            this.txtCapturedData.Name = "txtCapturedData";
-            this.txtCapturedData.ReadOnly = true;
-            this.txtCapturedData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtCapturedData.Size = new System.Drawing.Size(417, 319);
-            this.txtCapturedData.TabIndex = 2;
+            this.txtResults.Font = new System.Drawing.Font("Lucida Console", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtResults.Location = new System.Drawing.Point(12, 150);
+            this.txtResults.Multiline = true;
+            this.txtResults.Name = "txtResults";
+            this.txtResults.ReadOnly = true;
+            this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtResults.Size = new System.Drawing.Size(417, 319);
+            this.txtResults.TabIndex = 2;
             // 
             // timer1
             // 
@@ -120,7 +125,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -166,10 +171,10 @@
             this.colCountry,
             this.colLat,
             this.colLong});
-            this.resultTable.Location = new System.Drawing.Point(435, 27);
+            this.resultTable.Location = new System.Drawing.Point(435, 44);
             this.resultTable.Name = "resultTable";
             this.resultTable.ReadOnly = true;
-            this.resultTable.Size = new System.Drawing.Size(1117, 442);
+            this.resultTable.Size = new System.Drawing.Size(1117, 425);
             this.resultTable.TabIndex = 7;
             // 
             // sourceIP
@@ -216,18 +221,18 @@
             // 
             // ipAddress
             // 
-            this.ipAddress.Location = new System.Drawing.Point(12, 498);
+            this.ipAddress.Location = new System.Drawing.Point(12, 545);
             this.ipAddress.Name = "ipAddress";
-            this.ipAddress.Size = new System.Drawing.Size(199, 20);
+            this.ipAddress.Size = new System.Drawing.Size(195, 20);
             this.ipAddress.TabIndex = 8;
             // 
             // btnSearchIP
             // 
-            this.btnSearchIP.Location = new System.Drawing.Point(217, 498);
+            this.btnSearchIP.Location = new System.Drawing.Point(213, 544);
             this.btnSearchIP.Name = "btnSearchIP";
             this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
             this.btnSearchIP.TabIndex = 9;
-            this.btnSearchIP.Text = "Search";
+            this.btnSearchIP.Text = "Lookup IP";
             this.btnSearchIP.UseVisualStyleBackColor = true;
             this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
             // 
@@ -244,11 +249,11 @@
             this.chkAutoScroll.AutoSize = true;
             this.chkAutoScroll.Checked = true;
             this.chkAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoScroll.Location = new System.Drawing.Point(334, 501);
+            this.chkAutoScroll.Location = new System.Drawing.Point(12, 631);
             this.chkAutoScroll.Name = "chkAutoScroll";
-            this.chkAutoScroll.Size = new System.Drawing.Size(77, 17);
+            this.chkAutoScroll.Size = new System.Drawing.Size(112, 17);
             this.chkAutoScroll.TabIndex = 11;
-            this.chkAutoScroll.Text = "Auto Scroll";
+            this.chkAutoScroll.Text = "Auto Scroll Tables";
             this.chkAutoScroll.UseVisualStyleBackColor = true;
             // 
             // btnReset
@@ -265,11 +270,11 @@
             // chkHideLocal
             // 
             this.chkHideLocal.AutoSize = true;
-            this.chkHideLocal.Location = new System.Drawing.Point(334, 525);
+            this.chkHideLocal.Location = new System.Drawing.Point(12, 654);
             this.chkHideLocal.Name = "chkHideLocal";
-            this.chkHideLocal.Size = new System.Drawing.Size(77, 17);
+            this.chkHideLocal.Size = new System.Drawing.Size(143, 17);
             this.chkHideLocal.TabIndex = 13;
-            this.chkHideLocal.Text = "Hide Local";
+            this.chkHideLocal.Text = "Stop showing private IPs";
             this.chkHideLocal.UseVisualStyleBackColor = true;
             // 
             // tblGratuitousArps
@@ -325,6 +330,54 @@
             this.lblGratuitousArps.TabIndex = 15;
             this.lblGratuitousArps.Text = "Gratuitous ARPs";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 497);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "IP Lookup";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 519);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(326, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Perform a lookup of the IP specified below and display it on the map";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 605);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(204, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Configure how the capture tables function";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 583);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Settings";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(916, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(170, 22);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Packet Locations";
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -332,6 +385,11 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblGratuitousArps);
             this.Controls.Add(this.tblGratuitousArps);
             this.Controls.Add(this.chkHideLocal);
@@ -344,7 +402,7 @@
             this.Controls.Add(this.txtGUID);
             this.Controls.Add(this.txtPacketCount);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtCapturedData);
+            this.Controls.Add(this.txtResults);
             this.Controls.Add(this.cmbDevices);
             this.Controls.Add(this.btnStartStop);
             this.Controls.Add(this.menuStrip1);
@@ -365,7 +423,7 @@
 
         private System.Windows.Forms.Button btnStartStop;
         private System.Windows.Forms.ComboBox cmbDevices;
-        private System.Windows.Forms.TextBox txtCapturedData;
+        private System.Windows.Forms.TextBox txtResults;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -393,6 +451,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colArpTargetMac;
         private System.Windows.Forms.DataGridViewTextBoxColumn colArpTargetIp;
         private System.Windows.Forms.Label lblGratuitousArps;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
 
