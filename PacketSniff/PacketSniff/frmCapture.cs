@@ -29,9 +29,7 @@ namespace PacketSniff
         CaptureDeviceList devices;                  // List of devices for this computer
         public ICaptureDevice device;               // Device using
         public static ICaptureDevice device2;       // Static device
-        // private string stringPackets = "";       // Captured data
         private int numPackets = 0;                 // Number of packets
-        frmSend fSend;                              // Send form
 
         public frmCapture()
         {
@@ -87,6 +85,9 @@ namespace PacketSniff
             return output;
         }
 
+        private ArrayList arps = new ArrayList();
+        private ArrayList gratuitousArps = new ArrayList();
+
         private void device_onPacketArrival(Object sender, CaptureEventArgs packet)
         {
             // Packets
@@ -102,13 +103,40 @@ namespace PacketSniff
                 IPv6Packet ip = (IPv6Packet)ethernetPacket.PayloadPacket;
                 address = ip.SourceAddress.MapToIPv4().ToString();
                 Console.WriteLine("Mapping " + ip.SourceAddress.ToString() + " to " + address);
-            }/*
+            }
             else if(ethernetPacket.PayloadPacket is ARPPacket)
             {
                 ARPPacket arp = (ARPPacket)ethernetPacket.PayloadPacket;
                 address = arp.SenderProtocolAddress.ToString();
                 Console.WriteLine("ARP " + address);
-            }*/
+                if (arp.Operation.ToString() == "Request")
+                {
+                    // Limit to the last 500 ARPs
+                    if (arps.Count >= 500)
+                    {
+                        arps.RemoveAt(0);
+                    }
+                    arps.Add(arp);
+                } else if (arp.Operation.ToString() == "Response")
+                {
+                    bool found = false;
+                    foreach (ARPPacket arpPacket in arps)
+                    {
+                        if (arp.SenderProtocolAddress.ToString() == arpPacket.TargetProtocolAddress.ToString())
+                        {
+                            Console.WriteLine("Found ARP Request from " + arp.SenderProtocolAddress.ToString() + "...Removing.");
+                            found = true;
+                            arps.Remove(arpPacket);
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        Console.WriteLine("Gratuitous ARP from " + arp.SenderProtocolAddress.ToString() + " (" + buildMAC(arp.SenderHardwareAddress.GetAddressBytes()) + ")");
+                        gratuitousArps.Add(arp);
+                    }
+                }
+            }
             else
             {
                 return;
@@ -121,54 +149,6 @@ namespace PacketSniff
             {
                 pendingAddresses.Add(address);
             }
-            
-            /*
-            if (!(ethernetPacket.PayloadPacket is IPv4Packet))
-            {
-                return;
-            }
-            IPv4Packet ipPacket = (IPv4Packet)ethernetPacket.PayloadPacket;
-            int srcPort = 0, destPort = 0;
-            uint seqNum = 0, ackNum = 0;
-            bool validChecksum, ack = false, syn = false;
-            byte[] data = { };
-            ushort checksum = 0;
-            if (ipPacket.PayloadPacket.GetType() == typeof(TcpPacket))
-            {
-                TcpPacket tcp = (TcpPacket)ipPacket.PayloadPacket;
-                srcPort = tcp.SourcePort;
-                destPort = tcp.DestinationPort;
-                validChecksum = tcp.ValidChecksum;
-                checksum = tcp.Checksum;
-                data = tcp.PayloadData;
-                ack = tcp.Ack;
-                syn = tcp.Syn;
-                seqNum = tcp.SequenceNumber;
-                ackNum = tcp.AcknowledgmentNumber;
-            } else if (ipPacket.PayloadPacket.GetType() == typeof(UdpPacket))
-            {
-                UdpPacket udp = (UdpPacket)ipPacket.PayloadPacket;
-                srcPort = udp.SourcePort;
-                destPort = udp.DestinationPort;
-                checksum = udp.Checksum;
-                validChecksum = udp.ValidChecksum;
-                data = udp.PayloadData;
-            } else
-            {
-                return;
-            }
-
-            addRow(new String[] {
-                ipPacket.SourceAddress.ToString(),
-                srcPort.ToString(),
-                ipPacket.DestinationAddress.ToString(),
-                destPort.ToString(),
-                buildMAC(ethernetPacket.SourceHwAddress.GetAddressBytes()),
-                buildMAC(ethernetPacket.DestinationHwAddress.GetAddressBytes()),
-                ipPacket.Protocol.ToString(),
-                ethernetPacket.Type.ToString()
-            });
-            */
         }
 
         private void addRow(String[] data)
@@ -204,9 +184,18 @@ namespace PacketSniff
         private bool changed = false;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //txtCapturedData.AppendText(stringPackets);
-            //stringPackets = "";
             txtPacketCount.Text = Convert.ToString(numPackets);
+            ArrayList tmparps = (ArrayList)gratuitousArps.Clone();
+            gratuitousArps.Clear();
+            foreach (ARPPacket arp in tmparps)
+            {
+                tblGratuitousArps.Rows.Add(new String[] {
+                    buildMAC(arp.SenderHardwareAddress.GetAddressBytes()),
+                    arp.SenderProtocolAddress.ToString(),
+                    buildMAC(arp.TargetHardwareAddress.GetAddressBytes()),
+                    arp.TargetProtocolAddress.ToString()
+                });
+            }
             ArrayList tmp = (ArrayList) pendingAddresses.Clone();
             pendingAddresses.Clear();
             changed = false;
@@ -241,23 +230,6 @@ namespace PacketSniff
         }
 
         /**
-         * Save captured packets to a file
-         */
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Open the dialog
-            saveFileDialog1.Filter = "Text Files|*.txt|All Files|*.*";
-            saveFileDialog1.Title = "Save the captured packets";
-            saveFileDialog1.ShowDialog();
-
-            // Verify a file name was specified
-            if (saveFileDialog1.FileName != "")
-            {
-                System.IO.File.WriteAllText(saveFileDialog1.FileName, txtCapturedData.Text);
-            }
-        }
-
-        /**
          * Exit the application
          */
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,38 +237,7 @@ namespace PacketSniff
             Application.Exit();
         }
 
-        /**
-         * Open captured packets in a file
-         */
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Open the dialog
-            openFileDialog1.Filter = "Text Files|*.txt|All Files|*.*";
-            openFileDialog1.Title = "Open captured packets";
-            openFileDialog1.ShowDialog();
-
-            // Verify a file name was specified
-            if (openFileDialog1.FileName != "")
-            {
-                txtCapturedData.Text = System.IO.File.ReadAllText(openFileDialog1.FileName);
-            }
-        }
-
-        private void sendWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (frmSend.instantiations == 0)
-            {
-                fSend = new frmSend(); // Creates a new frmSend
-                fSend.Show();
-            }
-        }
-
-        private void resultTable_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private String url = "https://maps.googleapis.com/maps/api/staticmap?size=900x450&markers=";
+        private String url = "https://maps.googleapis.com/maps/api/staticmap?size=800x400&markers=";
         private int markerCount = 0;
         private DatabaseReader reader = new DatabaseReader(
             System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PacketSniff.GeoLite2-City.mmdb")
@@ -312,14 +253,6 @@ namespace PacketSniff
             try
             {
                 var city = reader.City(ipAddress);
-                /*
-                Console.WriteLine(city.Country.Name);
-                Console.WriteLine(city.MostSpecificSubdivision.Name);
-                Console.WriteLine(city.City.Name);
-                Console.WriteLine(city.Postal.Code);
-                Console.WriteLine(city.Location.Latitude);
-                Console.WriteLine(city.Location.Longitude);
-                */
                 if (display)
                 {
                     txtCapturedData.Clear();
@@ -394,6 +327,13 @@ namespace PacketSniff
                 {
                     addedAddresses.Add(ipAddress);
                 }
+            } catch (MaxMind.GeoIP2.Exceptions.GeoIP2Exception)
+            {
+                if (display)
+                {
+                    txtCapturedData.Text = "Could not find address " + ipAddress;
+                }
+                Console.WriteLine("Could not find address " + ipAddress);
             }
         }
 
@@ -409,6 +349,9 @@ namespace PacketSniff
             resultTable.Rows.Clear();
             txtCapturedData.Clear();
             ipAddress.Clear();
+            arps.Clear();
+            gratuitousArps.Clear();
+            tblGratuitousArps.Rows.Clear();
             url = "https://maps.googleapis.com/maps/api/staticmap?size=900x450&markers=";
             markerCount = 0;
             numPackets = 0;
