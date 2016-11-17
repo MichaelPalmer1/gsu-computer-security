@@ -41,7 +41,8 @@ namespace PacketSniff
         // Arrays to track ARP packets and addresses
         private ArrayList arpRequests = new ArrayList();
         private ArrayList gratuitousArps = new ArrayList();
-        private ArrayList pendingAddresses = new ArrayList();
+        // private ArrayList pendingAddresses = new ArrayList();
+        private Hashtable pendingAddresses = new Hashtable();
         private ArrayList addedAddresses = new ArrayList();
 
         // Variables for the map
@@ -116,7 +117,7 @@ namespace PacketSniff
         {
             try
             {
-                String address = null;
+                String address = null, protocol = null;
 
                 // Convert the packet data from a byte array to a EthernetPacket instance
                 EthernetPacket ethernetPacket = (EthernetPacket)Packet.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
@@ -126,6 +127,7 @@ namespace PacketSniff
                 {
                     IPv4Packet ip = (IPv4Packet)ethernetPacket.PayloadPacket;
                     address = ip.SourceAddress.ToString();
+                    protocol = ip.Protocol.ToString();
                 }
 
                 // IPv6
@@ -135,6 +137,7 @@ namespace PacketSniff
 
                     // Convert address to IPv4 since the GeoIP database we're using doesn't support IPv6 lookups
                     address = ip.SourceAddress.MapToIPv4().ToString();
+                    protocol = ip.Protocol.ToString();
                 }
 
                 // ARP
@@ -145,6 +148,7 @@ namespace PacketSniff
 
                     // Check if this is a gratuitious ARP
                     checkForGratuitiousArp(arp);
+                    protocol = "ARP";
                 }
 
                 // Other
@@ -154,13 +158,15 @@ namespace PacketSniff
                     return;
                 }
 
+                
+
                 // We care about this packet, so the packet counter can increment
                 numPackets++;
 
                 // If we haven't processes this IP address yet, add it to the address queue
-                if (address != null && !addedAddresses.Contains(address) && !pendingAddresses.Contains(address))
+                if (address != null && !addedAddresses.Contains(address) && !pendingAddresses.ContainsKey(address))
                 {
-                    pendingAddresses.Add(address);
+                    pendingAddresses.Add(address, protocol);
                 }
             } catch (Exception)
             {
@@ -282,7 +288,8 @@ namespace PacketSniff
                 /** PACKET LOCATIONS **/
 
                 // Make a copy of the pending ip addresses so we can keep collecting while we add to the table
-                ArrayList tmpAddresses = (ArrayList)pendingAddresses.Clone();
+                // ArrayList tmpAddresses = (ArrayList)pendingAddresses.Clone();
+                Hashtable tmpAddresses = (Hashtable)pendingAddresses.Clone();
 
                 // Safe to clear this now
                 pendingAddresses.Clear();
@@ -291,9 +298,9 @@ namespace PacketSniff
                 doMapRefresh = false;
 
                 // Loop through the pending ip addresses and add them to the table and map
-                foreach (String ip in tmpAddresses)
+                foreach (DictionaryEntry entry in tmpAddresses)
                 {
-                    addIP(ip);
+                    addIP(entry.Key.ToString(), entry.Value.ToString());
                 }
 
                 // Check if the map needs to be refreshed
@@ -344,9 +351,10 @@ namespace PacketSniff
          * Add an IP address to the table and map
          * 
          * param name="ipAddress" IP address to add
+         * param name="protocol" Protocol
          * param name="manual" If true, this is a manual lookup and the GeoIP information should be shown in the textbook. Defaults to false.
          */
-        private void addIP(String ipAddress, bool manual = false)
+        private void addIP(String ipAddress, String protocol = "", bool manual = false)
         {
             // Exit if this is not a manual lookup and the address has already been processed. We don't need duplicates.
             if (addedAddresses.Contains(ipAddress) && !manual)
@@ -394,6 +402,7 @@ namespace PacketSniff
                     // Add the row to the result table
                     resultTable.Rows.Add(new String[] {
                         ipAddress,
+                        protocol,
                         city.City.Name,
                         city.MostSpecificSubdivision.Name,
                         postalCode,
@@ -422,7 +431,7 @@ namespace PacketSniff
                 else
                 {
                     // Not a manual lookup, so let's put a row for that IP in the table
-                    resultTable.Rows.Add(new String[] { ipAddress });
+                    resultTable.Rows.Add(new String[] { ipAddress, protocol });
                 }
 
                 // If the Hide Local checkbox is selected, add this address (most likely a private address) to the array so we don't report on it
@@ -442,7 +451,7 @@ namespace PacketSniff
                 else
                 {
                     // Not a manual lookup, so let's put a row for that IP in the table
-                    resultTable.Rows.Add(new String[] { ipAddress });
+                    resultTable.Rows.Add(new String[] { ipAddress, protocol });
                 }
             }
 
@@ -485,7 +494,7 @@ namespace PacketSniff
          */
         private void btnSearchIP_Click(object sender, EventArgs e)
         {
-            addIP(ipAddress.Text, true);
+            addIP(ipAddress.Text, "", true);
         }
     }
 }

@@ -40,13 +40,6 @@
             this.txtPacketCount = new System.Windows.Forms.TextBox();
             this.txtGUID = new System.Windows.Forms.TextBox();
             this.resultTable = new System.Windows.Forms.DataGridView();
-            this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ipAddress = new System.Windows.Forms.TextBox();
             this.btnSearchIP = new System.Windows.Forms.Button();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
@@ -64,6 +57,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblGratuitousArps)).BeginInit();
@@ -110,7 +111,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1564, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -165,6 +166,7 @@
             this.resultTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.resultTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceIP,
+            this.protocol,
             this.colCity,
             this.colState,
             this.colPostalCode,
@@ -176,48 +178,6 @@
             this.resultTable.ReadOnly = true;
             this.resultTable.Size = new System.Drawing.Size(1117, 425);
             this.resultTable.TabIndex = 7;
-            // 
-            // sourceIP
-            // 
-            this.sourceIP.HeaderText = "Source IP";
-            this.sourceIP.Name = "sourceIP";
-            this.sourceIP.ReadOnly = true;
-            // 
-            // colCity
-            // 
-            this.colCity.HeaderText = "City";
-            this.colCity.Name = "colCity";
-            this.colCity.ReadOnly = true;
-            // 
-            // colState
-            // 
-            this.colState.HeaderText = "State";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            // 
-            // colPostalCode
-            // 
-            this.colPostalCode.HeaderText = "Postal Code";
-            this.colPostalCode.Name = "colPostalCode";
-            this.colPostalCode.ReadOnly = true;
-            // 
-            // colCountry
-            // 
-            this.colCountry.HeaderText = "Country";
-            this.colCountry.Name = "colCountry";
-            this.colCountry.ReadOnly = true;
-            // 
-            // colLat
-            // 
-            this.colLat.HeaderText = "Latitude";
-            this.colLat.Name = "colLat";
-            this.colLat.ReadOnly = true;
-            // 
-            // colLong
-            // 
-            this.colLong.HeaderText = "Longitude";
-            this.colLong.Name = "colLong";
-            this.colLong.ReadOnly = true;
             // 
             // ipAddress
             // 
@@ -378,13 +338,61 @@
             this.label6.TabIndex = 20;
             this.label6.Text = "Packet Locations";
             // 
+            // sourceIP
+            // 
+            this.sourceIP.HeaderText = "Source IP";
+            this.sourceIP.Name = "sourceIP";
+            this.sourceIP.ReadOnly = true;
+            // 
+            // protocol
+            // 
+            this.protocol.HeaderText = "Protocol";
+            this.protocol.Name = "protocol";
+            this.protocol.ReadOnly = true;
+            // 
+            // colCity
+            // 
+            this.colCity.HeaderText = "City";
+            this.colCity.Name = "colCity";
+            this.colCity.ReadOnly = true;
+            // 
+            // colState
+            // 
+            this.colState.HeaderText = "State";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            // 
+            // colPostalCode
+            // 
+            this.colPostalCode.HeaderText = "Postal Code";
+            this.colPostalCode.Name = "colPostalCode";
+            this.colPostalCode.ReadOnly = true;
+            // 
+            // colCountry
+            // 
+            this.colCountry.HeaderText = "Country";
+            this.colCountry.Name = "colCountry";
+            this.colCountry.ReadOnly = true;
+            // 
+            // colLat
+            // 
+            this.colLat.HeaderText = "Latitude";
+            this.colLat.Name = "colLat";
+            this.colLat.ReadOnly = true;
+            // 
+            // colLong
+            // 
+            this.colLong.HeaderText = "Longitude";
+            this.colLong.Name = "colLong";
+            this.colLong.ReadOnly = true;
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1564, 979);
+            this.ClientSize = new System.Drawing.Size(1284, 782);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
@@ -435,13 +443,6 @@
         private System.Windows.Forms.TextBox ipAddress;
         private System.Windows.Forms.Button btnSearchIP;
         private System.Windows.Forms.WebBrowser webBrowser;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sourceIP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colState;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPostalCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCountry;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLat;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
         private System.Windows.Forms.CheckBox chkAutoScroll;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.CheckBox chkHideLocal;
@@ -456,6 +457,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sourceIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn protocol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPostalCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCountry;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLong;
     }
 }
 
