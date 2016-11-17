@@ -40,6 +40,14 @@
             this.txtPacketCount = new System.Windows.Forms.TextBox();
             this.txtGUID = new System.Windows.Forms.TextBox();
             this.resultTable = new System.Windows.Forms.DataGridView();
+            this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ipAddress = new System.Windows.Forms.TextBox();
             this.btnSearchIP = new System.Windows.Forms.Button();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
@@ -57,14 +65,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.sourceIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.protocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblGratuitousArps)).BeginInit();
@@ -86,7 +86,7 @@
             this.cmbDevices.FormattingEnabled = true;
             this.cmbDevices.Location = new System.Drawing.Point(12, 97);
             this.cmbDevices.Name = "cmbDevices";
-            this.cmbDevices.Size = new System.Drawing.Size(417, 21);
+            this.cmbDevices.Size = new System.Drawing.Size(349, 21);
             this.cmbDevices.TabIndex = 1;
             this.cmbDevices.SelectedIndexChanged += new System.EventHandler(this.cmbDevices_SelectedIndexChanged);
             // 
@@ -98,7 +98,7 @@
             this.txtResults.Name = "txtResults";
             this.txtResults.ReadOnly = true;
             this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtResults.Size = new System.Drawing.Size(417, 319);
+            this.txtResults.Size = new System.Drawing.Size(349, 245);
             this.txtResults.TabIndex = 2;
             // 
             // timer1
@@ -111,7 +111,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1239, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -135,15 +135,15 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(216, 60);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 13);
+            this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Number of Packets";
+            this.label1.Text = "Packets";
             // 
             // txtPacketCount
             // 
-            this.txtPacketCount.Location = new System.Drawing.Point(320, 57);
+            this.txtPacketCount.Location = new System.Drawing.Point(268, 57);
             this.txtPacketCount.Name = "txtPacketCount";
-            this.txtPacketCount.Size = new System.Drawing.Size(109, 20);
+            this.txtPacketCount.Size = new System.Drawing.Size(93, 20);
             this.txtPacketCount.TabIndex = 5;
             this.txtPacketCount.Text = "0";
             this.txtPacketCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -153,7 +153,7 @@
             this.txtGUID.Location = new System.Drawing.Point(12, 124);
             this.txtGUID.Name = "txtGUID";
             this.txtGUID.ReadOnly = true;
-            this.txtGUID.Size = new System.Drawing.Size(417, 20);
+            this.txtGUID.Size = new System.Drawing.Size(349, 20);
             this.txtGUID.TabIndex = 6;
             // 
             // resultTable
@@ -173,170 +173,11 @@
             this.colCountry,
             this.colLat,
             this.colLong});
-            this.resultTable.Location = new System.Drawing.Point(435, 44);
+            this.resultTable.Location = new System.Drawing.Point(367, 44);
             this.resultTable.Name = "resultTable";
             this.resultTable.ReadOnly = true;
-            this.resultTable.Size = new System.Drawing.Size(1117, 425);
+            this.resultTable.Size = new System.Drawing.Size(844, 326);
             this.resultTable.TabIndex = 7;
-            // 
-            // ipAddress
-            // 
-            this.ipAddress.Location = new System.Drawing.Point(12, 545);
-            this.ipAddress.Name = "ipAddress";
-            this.ipAddress.Size = new System.Drawing.Size(195, 20);
-            this.ipAddress.TabIndex = 8;
-            // 
-            // btnSearchIP
-            // 
-            this.btnSearchIP.Location = new System.Drawing.Point(213, 544);
-            this.btnSearchIP.Name = "btnSearchIP";
-            this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
-            this.btnSearchIP.TabIndex = 9;
-            this.btnSearchIP.Text = "Lookup IP";
-            this.btnSearchIP.UseVisualStyleBackColor = true;
-            this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.Location = new System.Drawing.Point(435, 475);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(553, 492);
-            this.webBrowser.TabIndex = 10;
-            // 
-            // chkAutoScroll
-            // 
-            this.chkAutoScroll.AutoSize = true;
-            this.chkAutoScroll.Checked = true;
-            this.chkAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoScroll.Location = new System.Drawing.Point(12, 631);
-            this.chkAutoScroll.Name = "chkAutoScroll";
-            this.chkAutoScroll.Size = new System.Drawing.Size(112, 17);
-            this.chkAutoScroll.TabIndex = 11;
-            this.chkAutoScroll.Text = "Auto Scroll Tables";
-            this.chkAutoScroll.UseVisualStyleBackColor = true;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(106, 44);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(88, 39);
-            this.btnReset.TabIndex = 12;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // chkHideLocal
-            // 
-            this.chkHideLocal.AutoSize = true;
-            this.chkHideLocal.Location = new System.Drawing.Point(12, 654);
-            this.chkHideLocal.Name = "chkHideLocal";
-            this.chkHideLocal.Size = new System.Drawing.Size(143, 17);
-            this.chkHideLocal.TabIndex = 13;
-            this.chkHideLocal.Text = "Stop showing private IPs";
-            this.chkHideLocal.UseVisualStyleBackColor = true;
-            // 
-            // tblGratuitousArps
-            // 
-            this.tblGratuitousArps.AllowUserToAddRows = false;
-            this.tblGratuitousArps.AllowUserToDeleteRows = false;
-            this.tblGratuitousArps.AllowUserToOrderColumns = true;
-            this.tblGratuitousArps.AllowUserToResizeRows = false;
-            this.tblGratuitousArps.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.tblGratuitousArps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblGratuitousArps.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colArpSourceMac,
-            this.colArpSourceIp,
-            this.colArpTargetMac,
-            this.colArpTargetIp});
-            this.tblGratuitousArps.Location = new System.Drawing.Point(994, 497);
-            this.tblGratuitousArps.Name = "tblGratuitousArps";
-            this.tblGratuitousArps.ReadOnly = true;
-            this.tblGratuitousArps.Size = new System.Drawing.Size(558, 470);
-            this.tblGratuitousArps.TabIndex = 14;
-            // 
-            // colArpSourceMac
-            // 
-            this.colArpSourceMac.HeaderText = "Source Mac";
-            this.colArpSourceMac.Name = "colArpSourceMac";
-            this.colArpSourceMac.ReadOnly = true;
-            // 
-            // colArpSourceIp
-            // 
-            this.colArpSourceIp.HeaderText = "Source IP";
-            this.colArpSourceIp.Name = "colArpSourceIp";
-            this.colArpSourceIp.ReadOnly = true;
-            // 
-            // colArpTargetMac
-            // 
-            this.colArpTargetMac.HeaderText = "Target MAC";
-            this.colArpTargetMac.Name = "colArpTargetMac";
-            this.colArpTargetMac.ReadOnly = true;
-            // 
-            // colArpTargetIp
-            // 
-            this.colArpTargetIp.HeaderText = "Target IP";
-            this.colArpTargetIp.Name = "colArpTargetIp";
-            this.colArpTargetIp.ReadOnly = true;
-            // 
-            // lblGratuitousArps
-            // 
-            this.lblGratuitousArps.AutoSize = true;
-            this.lblGratuitousArps.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGratuitousArps.Location = new System.Drawing.Point(1205, 472);
-            this.lblGratuitousArps.Name = "lblGratuitousArps";
-            this.lblGratuitousArps.Size = new System.Drawing.Size(162, 22);
-            this.lblGratuitousArps.TabIndex = 15;
-            this.lblGratuitousArps.Text = "Gratuitous ARPs";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 497);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "IP Lookup";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 519);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(326, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Perform a lookup of the IP specified below and display it on the map";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 605);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(204, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Configure how the capture tables function";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 583);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 13);
-            this.label5.TabIndex = 18;
-            this.label5.Text = "Settings";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(916, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(170, 22);
-            this.label6.TabIndex = 20;
-            this.label6.Text = "Packet Locations";
             // 
             // sourceIP
             // 
@@ -386,13 +227,172 @@
             this.colLong.Name = "colLong";
             this.colLong.ReadOnly = true;
             // 
+            // ipAddress
+            // 
+            this.ipAddress.Location = new System.Drawing.Point(12, 471);
+            this.ipAddress.Name = "ipAddress";
+            this.ipAddress.Size = new System.Drawing.Size(195, 20);
+            this.ipAddress.TabIndex = 8;
+            // 
+            // btnSearchIP
+            // 
+            this.btnSearchIP.Location = new System.Drawing.Point(213, 470);
+            this.btnSearchIP.Name = "btnSearchIP";
+            this.btnSearchIP.Size = new System.Drawing.Size(75, 20);
+            this.btnSearchIP.TabIndex = 9;
+            this.btnSearchIP.Text = "Lookup IP";
+            this.btnSearchIP.UseVisualStyleBackColor = true;
+            this.btnSearchIP.Click += new System.EventHandler(this.btnSearchIP_Click);
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Location = new System.Drawing.Point(379, 376);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(399, 295);
+            this.webBrowser.TabIndex = 10;
+            // 
+            // chkAutoScroll
+            // 
+            this.chkAutoScroll.AutoSize = true;
+            this.chkAutoScroll.Checked = true;
+            this.chkAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutoScroll.Location = new System.Drawing.Point(12, 557);
+            this.chkAutoScroll.Name = "chkAutoScroll";
+            this.chkAutoScroll.Size = new System.Drawing.Size(112, 17);
+            this.chkAutoScroll.TabIndex = 11;
+            this.chkAutoScroll.Text = "Auto Scroll Tables";
+            this.chkAutoScroll.UseVisualStyleBackColor = true;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.Location = new System.Drawing.Point(106, 44);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(88, 39);
+            this.btnReset.TabIndex = 12;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // chkHideLocal
+            // 
+            this.chkHideLocal.AutoSize = true;
+            this.chkHideLocal.Location = new System.Drawing.Point(12, 580);
+            this.chkHideLocal.Name = "chkHideLocal";
+            this.chkHideLocal.Size = new System.Drawing.Size(143, 17);
+            this.chkHideLocal.TabIndex = 13;
+            this.chkHideLocal.Text = "Stop showing private IPs";
+            this.chkHideLocal.UseVisualStyleBackColor = true;
+            // 
+            // tblGratuitousArps
+            // 
+            this.tblGratuitousArps.AllowUserToAddRows = false;
+            this.tblGratuitousArps.AllowUserToDeleteRows = false;
+            this.tblGratuitousArps.AllowUserToOrderColumns = true;
+            this.tblGratuitousArps.AllowUserToResizeRows = false;
+            this.tblGratuitousArps.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tblGratuitousArps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblGratuitousArps.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colArpSourceMac,
+            this.colArpSourceIp,
+            this.colArpTargetMac,
+            this.colArpTargetIp});
+            this.tblGratuitousArps.Location = new System.Drawing.Point(787, 398);
+            this.tblGratuitousArps.Name = "tblGratuitousArps";
+            this.tblGratuitousArps.ReadOnly = true;
+            this.tblGratuitousArps.Size = new System.Drawing.Size(424, 273);
+            this.tblGratuitousArps.TabIndex = 14;
+            // 
+            // colArpSourceMac
+            // 
+            this.colArpSourceMac.HeaderText = "Source Mac";
+            this.colArpSourceMac.Name = "colArpSourceMac";
+            this.colArpSourceMac.ReadOnly = true;
+            // 
+            // colArpSourceIp
+            // 
+            this.colArpSourceIp.HeaderText = "Source IP";
+            this.colArpSourceIp.Name = "colArpSourceIp";
+            this.colArpSourceIp.ReadOnly = true;
+            // 
+            // colArpTargetMac
+            // 
+            this.colArpTargetMac.HeaderText = "Target MAC";
+            this.colArpTargetMac.Name = "colArpTargetMac";
+            this.colArpTargetMac.ReadOnly = true;
+            // 
+            // colArpTargetIp
+            // 
+            this.colArpTargetIp.HeaderText = "Target IP";
+            this.colArpTargetIp.Name = "colArpTargetIp";
+            this.colArpTargetIp.ReadOnly = true;
+            // 
+            // lblGratuitousArps
+            // 
+            this.lblGratuitousArps.AutoSize = true;
+            this.lblGratuitousArps.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGratuitousArps.Location = new System.Drawing.Point(933, 373);
+            this.lblGratuitousArps.Name = "lblGratuitousArps";
+            this.lblGratuitousArps.Size = new System.Drawing.Size(162, 22);
+            this.lblGratuitousArps.TabIndex = 15;
+            this.lblGratuitousArps.Text = "Gratuitous ARPs";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 423);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "IP Lookup";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 445);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(326, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Perform a lookup of the IP specified below and display it on the map";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 531);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(204, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Configure how the capture tables function";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 509);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Settings";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(718, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(170, 22);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Packet Locations";
+            // 
             // frmCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1284, 782);
+            this.ClientSize = new System.Drawing.Size(1239, 724);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
