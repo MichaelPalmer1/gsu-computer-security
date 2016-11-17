@@ -189,7 +189,7 @@ namespace PacketSniff
                 }
 
                 // Add the ARP request to the ArrayList so we can check against it later
-                arpRequests.Add(arp);
+                arpRequests.Add(arp.TargetProtocolAddress.ToString());
             }
 
             // ARP Response
@@ -198,13 +198,13 @@ namespace PacketSniff
                 // Use this to track if a corresponding ARP request has been found
                 bool found = false;
 
-                foreach (ARPPacket arpPacket in arpRequests)
+                foreach (String targetAddress in arpRequests)
                 {
-                    if (arp.SenderProtocolAddress.ToString() == arpPacket.TargetProtocolAddress.ToString())
+                    if (arp.SenderProtocolAddress.ToString() == targetAddress)
                     {
                         // Found a corresponding ARP request, which means it is safe to remove it from the ARP request ArrayList
                         found = true;
-                        arpRequests.Remove(arpPacket);
+                        arpRequests.Remove(targetAddress);
                         break;
                     }
                 }
