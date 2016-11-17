@@ -274,7 +274,7 @@ namespace PacketSniff
                 }
 
                 // If auto scroll is enabled, then scroll the row.
-                if (chkAutoScroll.Checked)
+                if (chkAutoScroll.Checked && tblGratuitousArps.RowCount > 0)
                 {
                     tblGratuitousArps.FirstDisplayedScrollingRowIndex = tblGratuitousArps.RowCount - 1;
                 }
@@ -447,7 +447,7 @@ namespace PacketSniff
             }
 
             // If auto scroll is enabled, then scroll the row.
-            if (chkAutoScroll.Checked)
+            if (chkAutoScroll.Checked && resultTable.RowCount > 0)
             {
                 resultTable.FirstDisplayedScrollingRowIndex = resultTable.RowCount - 1;
             }
