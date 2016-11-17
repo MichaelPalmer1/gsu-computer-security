@@ -468,7 +468,7 @@ namespace PacketSniff
             arpRequests.Clear();
             gratuitousArps.Clear();
             tblGratuitousArps.Rows.Clear();
-            mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=600x450&markers=";
+            mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=500x450&markers=";
             markerCount = 0;
             numPackets = 0;
             txtPacketCount.Text = "0";
