@@ -3,7 +3,7 @@
 # Ethernet2 Header ---------
 
  68 A8 6D 29 F2 72 # Destination MAC
- 68 A8 6D 29 F2 72 # Source MAC
+ AA BB CC DD EE FF # Source MAC
  08 06             # Protocol
 
 # ARP Header ---------------
