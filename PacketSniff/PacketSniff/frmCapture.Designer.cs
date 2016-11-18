@@ -111,7 +111,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1239, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1392, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -176,7 +176,7 @@
             this.resultTable.Location = new System.Drawing.Point(367, 44);
             this.resultTable.Name = "resultTable";
             this.resultTable.ReadOnly = true;
-            this.resultTable.Size = new System.Drawing.Size(844, 326);
+            this.resultTable.Size = new System.Drawing.Size(1013, 326);
             this.resultTable.TabIndex = 7;
             // 
             // sourceIP
@@ -246,10 +246,10 @@
             // 
             // webBrowser
             // 
-            this.webBrowser.Location = new System.Drawing.Point(379, 376);
+            this.webBrowser.Location = new System.Drawing.Point(367, 376);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(399, 295);
+            this.webBrowser.Size = new System.Drawing.Size(542, 460);
             this.webBrowser.TabIndex = 10;
             // 
             // chkAutoScroll
@@ -298,10 +298,10 @@
             this.colArpSourceIp,
             this.colArpTargetMac,
             this.colArpTargetIp});
-            this.tblGratuitousArps.Location = new System.Drawing.Point(787, 398);
+            this.tblGratuitousArps.Location = new System.Drawing.Point(915, 398);
             this.tblGratuitousArps.Name = "tblGratuitousArps";
             this.tblGratuitousArps.ReadOnly = true;
-            this.tblGratuitousArps.Size = new System.Drawing.Size(424, 273);
+            this.tblGratuitousArps.Size = new System.Drawing.Size(465, 438);
             this.tblGratuitousArps.TabIndex = 14;
             // 
             // colArpSourceMac
@@ -332,7 +332,7 @@
             // 
             this.lblGratuitousArps.AutoSize = true;
             this.lblGratuitousArps.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGratuitousArps.Location = new System.Drawing.Point(933, 373);
+            this.lblGratuitousArps.Location = new System.Drawing.Point(1076, 373);
             this.lblGratuitousArps.Name = "lblGratuitousArps";
             this.lblGratuitousArps.Size = new System.Drawing.Size(162, 22);
             this.lblGratuitousArps.TabIndex = 15;
@@ -380,7 +380,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(718, 19);
+            this.label6.Location = new System.Drawing.Point(809, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(170, 22);
             this.label6.TabIndex = 20;
@@ -392,7 +392,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1239, 724);
+            this.ClientSize = new System.Drawing.Size(1392, 848);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);

@@ -46,7 +46,7 @@ namespace PacketSniff
 
         // Variables for the map
         private bool doMapRefresh = false;
-        private String mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=350x250&markers=";
+        private String mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=425x450&markers=";
         private int markerCount = 0;
 
         // GeoIP database reader
@@ -481,7 +481,7 @@ namespace PacketSniff
             arpRequests.Clear();
             gratuitousArps.Clear();
             tblGratuitousArps.Rows.Clear();
-            mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=500x450&markers=";
+            mapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=425x450&markers=";
             markerCount = 0;
             numPackets = 0;
             txtPacketCount.Text = "0";
